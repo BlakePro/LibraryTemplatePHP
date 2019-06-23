@@ -4,3 +4,4 @@ os.system("php -r \"if (hash_file('sha384', 'composer-setup.php') === '48e323626
 os.system("php composer-setup.php");
 os.system("php -r \"unlink('composer-setup.php');\"");
 os.system("php composer.phar require blakepro/template:dev-master");
+os.system("php -r \"unlink('installer.py');\"");
