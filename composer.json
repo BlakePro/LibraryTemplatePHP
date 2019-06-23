@@ -1,5 +1,5 @@
 {
-    "name": "blakepro/html",
+    "name": "blakepro/template",
     "description": "A simple class to create HTML PHP from JSON file",
     "type": "library",
     "license": "MIT",
