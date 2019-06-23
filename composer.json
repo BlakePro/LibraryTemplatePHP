@@ -1,0 +1,17 @@
+{
+    "name": "blakepro/html",
+    "description": "A simple class to create HTML PHP from JSON file",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cristian Yosafat Hernández Ruiz",
+            "email": "blakegt@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {"blakepro\\Template\\": "src/"}
+    },
+    "require": {}
+}
