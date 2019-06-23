@@ -1,0 +1,91 @@
+{
+  "lang": "",
+  "title": "",
+  "logo": "",
+  "link": [
+    {
+      "rel": "apple-touch-icon",
+      "sizes": "180x180",
+      "href": ""
+    },
+    {
+      "rel": "icon",
+      "sizes": "32x32",
+      "type": "image/png",
+      "href": ""
+    },
+    {
+      "rel": "icon",
+      "sizes": "16x16",
+      "type": "image/png",
+      "href": ""
+    },
+    {
+      "rel": "manifest",
+      "href": ""
+    },
+    {
+      "rel": "mask-icon",
+      "color": "#FFFFFF",
+      "href": ""
+    }
+  ],
+  "meta": [
+    {
+      "charset": "UTF-8"
+    },
+    {
+      "name": "viewport",
+      "content": "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"
+    },
+    {
+      "name": "apple-mobile-web-app-title",
+      "content": ""
+    },
+    {
+      "name": "application-name",
+      "content": ""
+    },
+    {
+      "name": "apple-mobile-web-app-capable",
+      "content": "yes"
+    },
+    {
+      "name": "apple-touch-fullscreen",
+      "content": "yes"
+    },
+    {
+      "name": "apple-mobile-web-app-status-bar-style",
+      "content": "default"
+    },
+    {
+      "name": "msapplication-TileColor",
+      "content": "#FFFFFF"
+    },
+    {
+      "name": "theme-color",
+      "content": "#FFFFFF"
+    },
+    {
+      "name": "description",
+      "content": ""
+    },
+    {
+      "name": "author",
+      "content": ""
+    }
+  ],
+  "css": [
+    "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css",
+    "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css",
+    "https://use.fontawesome.com/releases/v5.8.1/css/all.css""
+  ],
+  "js": [
+    "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/jquery.actual/1.0.19/jquery.actual.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js",
+  ]
+}
