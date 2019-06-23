@@ -26,8 +26,8 @@ class Html{
   public function tag($name, $html, $attr = [], $close_tag = TRUE){
     if(is_string($name) && is_string($html)){
       $html_attr = $this->attr($attr);
-      if($close_tag)return "<{$name} {$html_attr}>{$html}</{$name}>";
-      else return "<{$name} {$html_attr}/>";
+      if($close_tag)return "<{$name}{$html_attr}>{$html}</{$name}>";
+      else return "<{$name}{$html_attr}/>";
     }
   }
 
@@ -75,7 +75,7 @@ class Html{
   //FUNCTION TO GET INPUT
   public function input($attr = [], $label = ''){
     $html_attr = $this->attr($attr);
-    $input = "<input {$html_attr} />";
+    $input = "<input{$html_attr}/>";
 
     if($label == '')return $input;
     else{
@@ -211,7 +211,7 @@ class Html{
                   foreach($arr_row as $no => $data_row){
                     $d_value = $this->key('value', $data_row);
                     $style_td = $this->attr($this->key('attr', $data_row));
-                    $html_table .= "<{$type} {$style_td}>$d_value</{$type}>";
+                    $html_table .= "<{$type}{$style_td}>$d_value</{$type}>";
                   }
                   $html_table .= '</tr>';
                 }
@@ -311,7 +311,7 @@ class Html{
     if(array_key_exists('html', $attr))unset($attr['html']);
 
     $body_attr = $this->attr($attr);
-    $template .= "</head><body {$body_attr}>";
+    $template .= "</head><body{$body_attr}>";
 
     //BODY HTML REPLACE LOGO AND TEMPLATE NAME TAG
     $template .= str_replace(['{template_logo}', '{template_name}'], [$logo, $title], $body);
