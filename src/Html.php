@@ -160,7 +160,7 @@ class Html{
     
     if(is_array($attr_label)){
       $label = $this->key('label', $attr_label);
-      $label = $html->label($label);
+      $label = $this->label($label);
       if(array_key_exists('label', $attr_label))unset($attr_label['label']);
       
       $html_attr = $this->attr($attr_label);
