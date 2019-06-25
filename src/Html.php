@@ -161,9 +161,7 @@ class Html{
     if(is_array($attr_label)){
       $label = $this->label($this->key('label', $attr_label));
       if(array_key_exists('label', $attr_label))unset($attr_label['label']);
-      
-      $html_attr = $this->attr($attr_label);
-      return $this->div("{$label}{$select}", $html_attr);
+      return $this->div("{$label}{$select}", $attr_label);
     }else{
       return $select;
     }  
