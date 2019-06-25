@@ -159,11 +159,11 @@ class Html{
     }
     
     $select =  $this->tag('select', $html, $attr);
-    $arg_label = $this->key('arg_label', $attr);
+    $attr_label = $this->key('attr_label', $attr);
     
-    if(is_array($arg_label)){
-      $label = $html->label($this->key('label', $arg_label));
-      $class = $this->key('class', $arg_label);
+    if(is_array($attr_label)){
+      $label = $html->label($this->key('label', $attr_label));
+      $class = $this->key('class', $attr_label);
       return $html->div($label.$select, ['class' => $class]);
     }else{
       return $select;
