@@ -157,7 +157,18 @@ class Html{
         $html .= $this->tag('option', $option, $arg_option);
       }
     }
-    return $this->tag('select', $html, $attr);
+    
+    $select =  $this->tag('select', $html, $attr);
+    $arg_label = $this->key('arg_label', $attr);
+    
+    if(is_array($arg_label)){
+      $label = $html->label($this->key('label', $arg_label));
+      $class = $this->key('class', $arg_label);
+      return $html->div($label.$select, ['class' => $class]);
+    }else{
+      return $select;
+    }
+    
   }
 
   //FUNCTION TO GET HTML TABLE
