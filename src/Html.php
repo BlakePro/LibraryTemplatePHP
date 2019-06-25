@@ -160,10 +160,7 @@ class Html{
     
     if(is_array($attr_label)){
       $label = $this->label($this->key('label', $attr_label));
-      echo print_r($attr_label);
       if(array_key_exists('label', $attr_label))unset($attr_label['label']);
-      echo '<hr>';
-      echo print_r($attr_label);
       return $this->div("{$label}{$select}", $attr_label);
     }else{
       return $select;
