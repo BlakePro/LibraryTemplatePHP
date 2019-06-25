@@ -86,11 +86,6 @@ class Html{
     }
   }
 
-  //FUNCTION TO GET LABEL
-  public function label($html, $attr = []){
-    return $this->tag('label', $html, $attr);
-  }
-
   //FUNCTION TO GET TEXTAREA
   public function textarea($html, $attr = []){
     return $this->tag('textarea', $html, $attr);
@@ -172,8 +167,12 @@ class Html{
       return $html->div($label.$select, $html_attr);
     }else{
       return $select;
-    }
-    
+    }  
+  }
+  
+  //FUNCTION TO GET LABEL
+  public function label($html, $attr = []){
+    return $this->tag('label', $html, $attr);
   }
 
   //FUNCTION TO GET HTML TABLE
