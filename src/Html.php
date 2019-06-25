@@ -154,14 +154,14 @@ class Html{
     }
     
     $attr_label = $this->key('attr_label', $attr);
-    if(!empty($attr_label))unset($attr['label']);
+    if(array_key_exists('attr_label', $attr))unset($attr['attr_label']);
     
     $select =  $this->tag('select', $html, $attr);
     
     if(is_array($attr_label)){
       $label = $this->key('label', $attr_label);
       $label = $html->label($label);
-      if($label != '')unset($attr_label['label']);
+      if(array_key_exists('label', $attr_label))unset($attr_label['label']);
       
       $html_attr = $this->attr($attr_label);
       return $html->div($label.$select, $html_attr);
