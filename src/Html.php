@@ -159,12 +159,11 @@ class Html{
     $select =  $this->tag('select', $html, $attr);
     
     if(is_array($attr_label)){
-      $label = $this->key('label', $attr_label);
-      $label = $this->label($label);
+      $label = $this->label($this->key('label', $attr_label));
       if(array_key_exists('label', $attr_label))unset($attr_label['label']);
       
       $html_attr = $this->attr($attr_label);
-      return $html->div($label.$select, $html_attr);
+      return $this->div("{$label}{$select}", $html_attr);
     }else{
       return $select;
     }  
