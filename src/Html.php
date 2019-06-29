@@ -142,13 +142,13 @@ class Html{
     return $this->tag('b', $html, $attr);
   }
 
-  //FUNCTION TO GET SELECTL
+  //FUNCTION TO GET SELECT
   public function select($array, $attr = []){
     $html = '';
     if(!empty($array) && is_array($array)){
       foreach($array as $no => $arg_option){
         $option = $this->key('option', $arg_option);
-        if($option != '')unset($arg_option['option']);
+        if(array_key_exists('option', $arg_option))unset($arg_option['option']);
         $html .= $this->tag('option', $option, $arg_option);
       }
     }
