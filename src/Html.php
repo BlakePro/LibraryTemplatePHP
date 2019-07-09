@@ -205,35 +205,32 @@ class Html{
       }
       //FIX ADD BLANK SPACE IF NOT EXISTS
 
-      $head = '';
       foreach($table as $type => $arr){
-        if($type == 'th')$head = '<thead role="row" class="even">';
-        if($type == 'td')$head = '<tbody>';
-        if(!is_array($head))$html .= $head;
-          if(!empty($arr) && is_array($arr)){
-            $no_line = 0;
-            foreach($arr as $row => $arr_row){
-              if(!empty($arr_row)){
+        if($type == 'th')$html .= '<thead role="row" class="even">';
+        if($type == 'td')$html .= '<tbody>';
+        if(!empty($arr) && is_array($arr)){
+          $no_line = 0;
+          foreach($arr as $row => $arr_row){
+            if(!empty($arr_row)){
 
-                if(is_array($arr_row) && !empty($arr_row)){
-                  if($no_line % 2 == 0)$class_row = "role='row' class='even'";
-                  else $class_row = "role='row' class='odd'";
+              if(is_array($arr_row) && !empty($arr_row)){
+                if($no_line % 2 == 0)$class_row = "role='row' class='even'";
+                else $class_row = "role='row' class='odd'";
 
-                  $html .= "<tr $class_row>";
-                  foreach($arr_row as $no => $data_row){
-                    $d_value = $this->key('value', $data_row);
-                    $style_td = $this->attr($this->key('attr', $data_row));
-                    $html .= "<{$type}{$style_td}>$d_value</{$type}>";
-                  }
-                  $html .= '</tr>';
+                $html .= "<tr $class_row>";
+                foreach($arr_row as $no => $data_row){
+                  $value = $this->key('value', $data_row);
+                  $style = $this->attr($this->key('attr', $data_row));
+                  $html .= "<{$type}{$style}>$value</{$type}>";
                 }
+                $html .= '</tr>';
               }
-              ++$no_line;
             }
+            ++$no_line;
           }
-        if($type = 'th')$head = '</thead>';
-        if($type = 'td')$head = '</tbody>';
-        $html .= $head;
+        }
+        if($type = 'th')$html .= '</thead>';
+        if($type = 'td')$html .= '</tbody>';
       }
     }
     return $this->tag('table', $html);
