@@ -219,8 +219,13 @@ class Html{
 
                 $html .= "<tr $class_row>";
                 foreach($arr_row as $no => $data_row){
-                  $value = $this->key('value', $data_row);
-                  $style = $this->attr($this->key('attr', $data_row));
+                  if(is_array($data_row)){
+                    $value = $this->key('value', $data_row);
+                    $style = $this->attr($this->key('attr', $data_row));
+                  }else{
+                    $value = $data_row;
+                    $style = '';
+                  }
                   $html .= "<{$type}{$style}>$value</{$type}>";
                 }
                 $html .= '</tr>';
