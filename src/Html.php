@@ -177,8 +177,7 @@ class Html{
     $html = '';
     if(is_array($table)){
       
-      $data_table = $this->key('attr', $table);
-      $attr_table = $this->attr($this->key('attr', $data_table));
+      $attr_table = $this->attr($this->key('attr', $table));
       if(array_key_exists('attr', $table))unset($table['attr']);
       
       //FIX ADD BLANK SPACE IF NOT EXISTS
