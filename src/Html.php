@@ -177,7 +177,7 @@ class Html{
     $html = '';
     if(is_array($table)){
       //FIX ADD BLANK SPACE IF NOT EXISTS
-      $max_array = array();
+      $max_array = [];
       foreach($table as $ktype => $arrt){
         if(!empty($arrt) && is_array($arrt)){
           foreach($arrt as $kt => $vt){
@@ -205,11 +205,11 @@ class Html{
       }
       //FIX ADD BLANK SPACE IF NOT EXISTS
 
-      $html_table = $head = '';
+      $head = '';
       foreach($table as $type => $arr){
         if($type == 'th')$head = '<thead role="row" class="even">';
         if($type == 'td')$head = '<tbody>';
-        if(!is_array($head))$html_table .= $head;
+        if(!is_array($head))$html .= $head;
           if(!empty($arr) && is_array($arr)){
             $no_line = 0;
             foreach($arr as $row => $arr_row){
@@ -219,13 +219,13 @@ class Html{
                   if($no_line % 2 == 0)$class_row = "role='row' class='even'";
                   else $class_row = "role='row' class='odd'";
 
-                  $html_table .= "<tr $class_row>";
+                  $html .= "<tr $class_row>";
                   foreach($arr_row as $no => $data_row){
                     $d_value = $this->key('value', $data_row);
                     $style_td = $this->attr($this->key('attr', $data_row));
-                    $html_table .= "<{$type}{$style_td}>$d_value</{$type}>";
+                    $html .= "<{$type}{$style_td}>$d_value</{$type}>";
                   }
-                  $html_table .= '</tr>';
+                  $html .= '</tr>';
                 }
               }
               ++$no_line;
@@ -233,11 +233,10 @@ class Html{
           }
         if($type = 'th')$head = '</thead>';
         if($type = 'td')$head = '</tbody>';
-        $html_table .= $head;
+        $html .= $head;
       }
-      $table = $html_table;
     }
-    return "<table>$table</table>";
+    return $this->tag('table', $html);
   }
 
   //FUNCTION TO GET HTML ALERT
