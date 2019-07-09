@@ -12,6 +12,6 @@ php composer.phar require blakepro/template:dev-master
 
 python installer.py
 
-# Update library via Composer (Terminal)
+# Update via Composer (Terminal)
 
 php composer.phar update blakepro/template
