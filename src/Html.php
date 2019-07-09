@@ -176,6 +176,11 @@ class Html{
   public function table($table){
     $html = '';
     if(is_array($table)){
+      
+      $data_table = $this->key('attr', $table);
+      $attr_table = $this->attr($this->key('attr', $data_table));
+      if(array_key_exists('attr', $table))unset($table['attr']);
+      
       //FIX ADD BLANK SPACE IF NOT EXISTS
       $max_array = [];
       foreach($table as $ktype => $arrt){
@@ -238,7 +243,7 @@ class Html{
         if($type = 'td')$html .= '</tbody>';
       }
     }
-    return $this->tag('table', $html);
+    return $this->tag('table', $html, $attr_table);
   }
 
   //FUNCTION TO GET HTML ALERT
