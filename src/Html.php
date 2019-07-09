@@ -175,71 +175,73 @@ class Html{
   //FUNCTION TO GET HTML TABLE
   public function table($table){
     $html = '';
+    $attr_table = $this->key('attr', $table);
+    if(array_key_exists('attr', $table))unset($table['attr']);
+    
     if(is_array($table)){
-      
-      $attr_table = $this->attr($this->key('attr', $table));
-      if(array_key_exists('attr', $table))unset($table['attr']);
-      
+        
       //FIX ADD BLANK SPACE IF NOT EXISTS
-      $max_array = [];
-      foreach($table as $ktype => $arrt){
-        if(!empty($arrt) && is_array($arrt)){
-          foreach($arrt as $kt => $vt){
-            $tot = count($vt);
-            if(!is_numeric($kt))$tot = $tot-1;
-            $max_array[$tot] = $tot;
-          }
-        }
-      }
-
-      krsort($max_array); $max = key($max_array);
-      foreach($table as $ktype => $arrt){
-        if(!empty($arrt) && is_array($arrt)){
-          foreach($arrt as $key => $vt){
-            $t = count($vt);
-            if(!is_numeric($key))$t = $t-1;
-            if($t < $max){
-              $size = $max - $t;
-              for($i = $t; $i < $max; ++$i){
-                $table[$ktype][$key][] = '';
-              }
+      if(!empty($table)){
+        $max_array = [];
+        foreach($table as $ktype => $arrt){
+          if(!empty($arrt) && is_array($arrt)){
+            foreach($arrt as $kt => $vt){
+              $tot = count($vt);
+              if(!is_numeric($kt))$tot = $tot-1;
+              $max_array[$tot] = $tot;
             }
           }
         }
-      }
-      //FIX ADD BLANK SPACE IF NOT EXISTS
 
-      foreach($table as $type => $arr){
-        if($type == 'th')$html .= '<thead role="row" class="even">';
-        if($type == 'td')$html .= '<tbody>';
-        if(!empty($arr) && is_array($arr)){
-          $no_line = 0;
-          foreach($arr as $row => $arr_row){
-            if(!empty($arr_row)){
-
-              if(is_array($arr_row) && !empty($arr_row)){
-                if($no_line % 2 == 0)$class_row = "role='row' class='even'";
-                else $class_row = "role='row' class='odd'";
-
-                $html .= "<tr $class_row>";
-                foreach($arr_row as $no => $data_row){
-                  if(is_array($data_row)){
-                    $value = $this->key('value', $data_row);
-                    $style = $this->attr($this->key('attr', $data_row));
-                  }else{
-                    $value = $data_row;
-                    $style = '';
-                  }
-                  $html .= "<{$type}{$style}>$value</{$type}>";
+        krsort($max_array); $max = key($max_array);
+        foreach($table as $ktype => $arrt){
+          if(!empty($arrt) && is_array($arrt)){
+            foreach($arrt as $key => $vt){
+              $t = count($vt);
+              if(!is_numeric($key))$t = $t-1;
+              if($t < $max){
+                $size = $max - $t;
+                for($i = $t; $i < $max; ++$i){
+                  $table[$ktype][$key][] = '';
                 }
-                $html .= '</tr>';
               }
             }
-            ++$no_line;
           }
         }
-        if($type = 'th')$html .= '</thead>';
-        if($type = 'td')$html .= '</tbody>';
+        //FIX ADD BLANK SPACE IF NOT EXISTS
+
+        foreach($table as $type => $arr){
+          if($type == 'th')$html .= '<thead role="row" class="even">';
+          if($type == 'td')$html .= '<tbody>';
+          if(!empty($arr) && is_array($arr)){
+            $no_line = 0;
+            foreach($arr as $row => $arr_row){
+              if(!empty($arr_row)){
+
+                if(is_array($arr_row) && !empty($arr_row)){
+                  if($no_line % 2 == 0)$class_row = "role='row' class='even'";
+                  else $class_row = "role='row' class='odd'";
+
+                  $html .= "<tr $class_row>";
+                  foreach($arr_row as $no => $data_row){
+                    if(is_array($data_row)){
+                      $value = $this->key('value', $data_row);
+                      $style = $this->attr($this->key('attr', $data_row));
+                    }else{
+                      $value = $data_row;
+                      $style = '';
+                    }
+                    $html .= "<{$type}{$style}>$value</{$type}>";
+                  }
+                  $html .= '</tr>';
+                }
+              }
+              ++$no_line;
+            }
+          }
+          if($type = 'th')$html .= '</thead>';
+          if($type = 'td')$html .= '</tbody>';
+        }
       }
     }
     return $this->tag('table', $html, $attr_table);
