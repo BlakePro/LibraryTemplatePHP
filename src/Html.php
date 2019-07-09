@@ -176,6 +176,8 @@ class Html{
   public function table($table){
     $html = '';
     $attr_table = $this->key('attr', $table);
+    
+    echo $this->pre($attr_table);
     if(array_key_exists('attr', $table))unset($table['attr']);
     
     if(is_array($table)){
