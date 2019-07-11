@@ -54,7 +54,7 @@ class Html{
 
   //FUNCTION REDIRECT HTML
   public function meta($url, $time = 0){
-  	return "<script>setTimeout(function(){window.location = '{$url}';}, {$time}*1000);</script>";
+  	return $this->script("setTimeout(function(){window.location = '{$url}';}, {$time}*1000);");
   }
 
   //FUNCTION TO GET ICON (FONTAWESOME PREFIX)
@@ -112,8 +112,8 @@ class Html{
   }
 
   //FUNCTION TO GET SCRIPT
-  public function script($attr = []){
-    return $this->tag('script', '', $attr);
+  public function script($script, $attr = []){
+    return $this->tag('script', $script, $attr);
   }
 
   //FUNCTION TO GET BR
@@ -340,7 +340,7 @@ class Html{
     //JS FILES
     if(!empty($configuration_js)){
       foreach($configuration_js as $no => $url){
-        $template .= $this->script(['src' => $url]);
+        $template .= $this->script('', ['src' => $url]);
       }
     }
 
