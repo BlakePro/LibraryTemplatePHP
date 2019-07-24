@@ -34,7 +34,7 @@ class Html{
   //FUNCTION TO GET ROW / GRID BOOSTRAP
   public function row($array){
     $data = '';
-    $delete = ['html', 'col', 'sm', 'md', 'lg', 'xl'];
+    $delete = ['html', 'col', 'sm', 'md', 'lg', 'xl', 'class'];
   	if(!empty($array)){
   		foreach($array as $k => $row){
         $style = '';
@@ -44,8 +44,11 @@ class Html{
         $col_md = $this->key('md', $row, $col);
         $col_lg = $this->key('lg', $row, $col);
         $col_xl = $this->key('xl', $row, $col);
-        foreach($row as $key => $val)if(in_array($key, $delete))unset($row[$key]);
-        $row['class'] = "col-sm-{$col_sm} col-md-{$col_md} col-lg-{$col_lg} col-xl-{$col_xl} col-{$col}";
+        $add_class = $this->key('class', $row, $col);
+        foreach($row as $key => $val){
+          if(in_array($key, $delete))unset($row[$key]);
+        }
+        $row['class'] = "col-sm-{$col_sm} col-md-{$col_md} col-lg-{$col_lg} col-xl-{$col_xl} col-{$col} {$add_class}";
         $data .= $this->div($html, $row);
   		}
   	}
