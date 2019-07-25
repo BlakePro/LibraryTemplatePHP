@@ -356,7 +356,7 @@ class Html{
 
   //HELPER FUNCTIONS
   public function key($key, $array, $default = ''){
-    return is_array($array) && is_string($key) ? array_key_exists($key, $array) ? $array[$key] : $default : '';
+    return is_array($array) ? array_key_exists($key, $array) ? $array[$key] : $default : '';
   }
 
   public function post($key){
