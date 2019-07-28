@@ -364,7 +364,7 @@ class Html{
     return $this->html($template);
   }
 
-  //HELPER FUNCTIONS
+  //HELPER FUNCTIONS KEY EXISTS
   public function key($key, $array, $default = ''){
     return is_array($array) ? array_key_exists($key, $array) ? $array[$key] : $default : '';
   }
