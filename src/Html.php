@@ -272,7 +272,10 @@ class Html{
   public function currency($number, $currency = '$', $decimal = 2){
   	if(!is_numeric($number))$number = 0;
     if(!is_numeric($decimal))$decimal = 2;
-  	return $currency.number_format($number, $decimal);
+    if($number < 0){
+      $number = $number * (-1);
+      return '-'.$currency.number_format($number, $decimal);
+    }else return $currency.number_format($number, $decimal);
   }
 
   //FUNCTION TO PRINT OR SHOW ARRAY AS CLEANEST POSSIBLE
