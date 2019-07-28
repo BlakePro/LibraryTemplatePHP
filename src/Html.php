@@ -65,7 +65,7 @@ class Html{
     return "<i class='{$prefix}{$name}'></i>";
   }
 
-  //FUNCTION TO GET HTML BUTTON
+  //FUNCTION TO GET HTML BUTTON WITH ICON
   public function button($title, $attr = []){
     $icon = $this->key('icon', $attr);
     $icon_left = $this->key('icon_left', $attr);
