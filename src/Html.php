@@ -72,7 +72,12 @@ class Html{
       $icon = $this->icon($icon);
       unset($attr['icon']);
     }
-    return $this->tag('button', "$title {$icon}", $attr);
+    $icon_left = $this->key('icon_left', $attr);
+    if($icon_left != ''){
+      unset($attr['icon_left']);
+      return $this->tag('button', "{$icon} $title", $attr);
+    }
+    else return $this->tag('button', "$title {$icon}", $attr);
   }
 
   //FUNCTION TO GET INPUT
