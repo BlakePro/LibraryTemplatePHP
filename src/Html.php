@@ -68,16 +68,18 @@ class Html{
   //FUNCTION TO GET HTML BUTTON
   public function button($title, $attr = []){
     $icon = $this->key('icon', $attr);
+    $icon_left = $this->key('icon_left', $attr);
     if($icon != ''){
       $icon = $this->icon($icon);
       unset($attr['icon']);
-    }
-    $icon_left = $this->key('icon_left', $attr);
-    if($icon_left != ''){
+      return $this->tag('button', "$title {$icon}", $attr);
+    
+    }elseif($icon_left != ''){
+      $icon = $this->icon($icon_left);
       unset($attr['icon_left']);
       return $this->tag('button', "{$icon} $title", $attr);
-    }
-    else return $this->tag('button', "$title {$icon}", $attr);
+    
+    }else return $this->tag('button', $title, $attr);
   }
 
   //FUNCTION TO GET INPUT
