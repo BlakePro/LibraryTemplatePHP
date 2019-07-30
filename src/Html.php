@@ -1,5 +1,4 @@
 <?php
-
 include_once 'Sql.php';
 include_once 'Utilities.php';
 
