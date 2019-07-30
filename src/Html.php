@@ -1,8 +1,8 @@
 <?php
+namespace blakepro\Template;
+
 include_once 'Sql.php';
 include_once 'Utilities.php';
-
-namespace blakepro\Template;
 
 class Html extends Sql implements Utilities{
 
