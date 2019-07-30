@@ -1,6 +1,6 @@
 <?php
 namespace blakepro\Template;
-use blakepro\Template;
+use blakepro\Template\Sql;
 
 class Html extends Sql implements Utilities{
 
