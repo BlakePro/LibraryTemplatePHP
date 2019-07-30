@@ -81,8 +81,8 @@ class Sql extends Utilities{
             $where_str .= "'$v',";
           }
         }
-        $where = $this->remove_str($where, 1);
-        $where_str = $this->remove_str($where_str, 1);
+        $where = $this->remove_string($where, 1);
+        $where_str = $this->remove_string($where_str, 1);
       }
     }
     return ['array' => $array_where, 'where_str' => $where_str, 'where' => $where];
@@ -189,7 +189,7 @@ class Sql extends Utilities{
           }
         }
 
-        $set_table = trim($this->remove_str($set_table, 1));
+        $set_table = trim($this->remove_string($set_table, 1));
 
   			$where_table = trim(substr(trim($where_table), 3));
   			if($where_table != '')$where_table = "WHERE {$where_table}";
@@ -247,12 +247,12 @@ class Sql extends Utilities{
 						}
 					}
 					if($str_key != ''){
-						$str_key = $this->remove_str($str_key, 2);
+						$str_key = $this->remove_string($str_key, 2);
 						$keys .= "{$str_key} AND ";
 					}
   			}
         //KEY
-        $keys = $this->remove_str($keys, 4);
+        $keys = $this->remove_string($keys, 4);
         if(!$this->in_string('=', $keys))$keys = '';
         $keys = "ON ($keys)";
   		}
@@ -268,12 +268,12 @@ class Sql extends Utilities{
   						}
   					}
   					if($str_key != ''){
-  						$str_key = $this->remove_str($str_key, 2);
+  						$str_key = $this->remove_string($str_key, 2);
   						$group_by .= "{$str_key} AND ";
   					}
   				}
   			}
-  			$group_by = $this->remove_str($group_by, 5);
+  			$group_by = $this->remove_string($group_by, 5);
   			if($group_by != '')$group_by = "GROUP BY $group_by";
   		}
 
@@ -287,7 +287,7 @@ class Sql extends Utilities{
   					}
 					}
 				}
-  			$order_by = $this->remove_str($str_order, 2);
+  			$order_by = $this->remove_string($str_order, 2);
   			if($order_by != '')$order_by = "ORDER BY $order_by";
   		}
 
@@ -355,8 +355,8 @@ class Sql extends Utilities{
 
 
       //DATA
-      $sql_join = $this->remove_str($sql_join, 6);
-      $rows = $this->remove_str($rows, 2);
+      $sql_join = $this->remove_string($sql_join, 6);
+      $rows = $this->remove_string($rows, 2);
 
       $sql_join = "SELECT $rows FROM ({$sql_join} {$keys}) $group_by $order_by $limit";
       $return = $this->sql($sql_join, $all_params);
@@ -436,7 +436,7 @@ class Sql extends Utilities{
             }
           }
         }
-        $set_table = $this->remove_str($set_table, 2);
+        $set_table = $this->remove_string($set_table, 2);
         /*-------- SET --------*/
 
         $sql = "INSERT INTO {$name_table} SET $set_table";
