@@ -1,11 +1,12 @@
 <?php
+namespace blakepro\Template;
 
 class Utilities{
-  
+
    public function __construct($attr = []){
     $this->encryption_key = $this->key('encryption_key', $attr);
   }
-  
+
    public function encrypt($string){
     return openssl_encrypt($string, "AES-128-ECB", $this->encryption_key);
   }
@@ -13,7 +14,7 @@ class Utilities{
   public function decrypt($string){
     return openssl_decrypt($string, "AES-128-ECB", $this->encryption_key);
   }
-  
+
   public function in_string($search, $string){
     $bool = strpos($string, $search);
     if($bool === FALSE)return FALSE;
@@ -24,7 +25,7 @@ class Utilities{
     if(is_string($string) && $string != '')return trim(substr($string, $start, strlen($string)-$int));
     else return $string;
   }
-  
+
   public function key($key, $array, $default = ''){
     return is_array($array) ? array_key_exists($key, $array) ? $array[$key] : $default : null;
   }
