@@ -93,29 +93,29 @@ class Sql{
   	$state = FALSE;
   	$sql_send = $sql;
   	if($sql != ''){
-  		try{
-        $db = $this->db();
-        if($exec_simple){
-          $db->exec($sql);
-        }else{
-  				$sql = $db->prepare($sql);
-          try{
-            @$sql->execute($params);
-            $message = $sql->errorInfo();
-            if($this->key(2, $message) == ''){
-              $state = TRUE;
-              if($return_id)$data_fetch['insert'] = $db->lastInsertId(); //@$db->lastInsertId();
-              elseif($fetch)$data_fetch = $sql->fetchALL(PDO::FETCH_ASSOC); //@$sql->fetchALL(PDO::FETCH_ASSOC);
-            }
-          }catch(PDOException $exception){
-            $message = $exception->getMessage();
-          }
-        }
-  	$db = null;
-  	}catch(PDOException $exception) {
-  		$message = $exception->getMessage();
-  	}
- 	}
+    	try{
+		$db = $this->db();
+		if($exec_simple){
+		  $db->exec($sql);
+		}else{
+		  $sql = $db->prepare($sql);
+		  try{
+		    @$sql->execute($params);
+		    $message = $sql->errorInfo();
+		    if($this->key(2, $message) == ''){
+		      $state = TRUE;
+		      if($return_id)$data_fetch['insert'] = $db->lastInsertId(); //@$db->lastInsertId();
+		      elseif($fetch)$data_fetch = $sql->fetchALL(PDO::FETCH_ASSOC); //@$sql->fetchALL(PDO::FETCH_ASSOC);
+		    }
+		  }catch(PDOException $exception){
+		    $message = $exception->getMessage();
+		  }
+		}
+		$db = null;
+		}catch(PDOException $exception) {
+			$message = $exception->getMessage();
+		}
+	}
   	return ['state' => $state,  'message' => $message, 'fetch' => $data_fetch, 'sql' => $this->query_print($sql_send, $params)];
   }
 
