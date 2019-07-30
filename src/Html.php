@@ -2,6 +2,9 @@
 
 namespace blakepro\Template;
 
+include 'Sql.php'
+include 'Utilities.php'
+
 class Html extends Sql implements Utilities{
 
   public function __construct($attr = []){
