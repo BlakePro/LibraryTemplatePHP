@@ -47,7 +47,8 @@ class Html extends \Sql implements \Utilities{
         foreach($row as $key => $val){
           if(in_array($key, $delete))unset($row[$key]);
         }
-        $row['class'] = "col-sm-{$col_sm} col-md-{$col_md} col-lg-{$col_lg} col-xl-{$col_xl} col-{$col} {$add_class}";
+        if(is_numeric($add_class))$add_class = '';
+        $row['class'] = trim("col-sm-{$col_sm} col-md-{$col_md} col-lg-{$col_lg} col-xl-{$col_xl} col-{$col} {$add_class}");
         $data .= $this->div($html, $row);
   		}
   	}
