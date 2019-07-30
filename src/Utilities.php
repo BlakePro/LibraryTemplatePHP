@@ -1,4 +1,5 @@
 <?php
+
 namespace blakepro\Template;
 
 class Utilities{
