@@ -1,7 +1,5 @@
 <?php
 
-//namespace blakepro\Template;
-
 class Sql{
 
   public function __construct($attr = []){
@@ -10,7 +8,11 @@ class Sql{
     $this->database_user = $this->key('user', $attr);
     $this->database_password = $this->key('password', $attr);
   }
-
+	
+  public function criteria(){
+    return ['=', ' !=', 'LIKE', 'LIKE %...%', 'NOT LIKE', 'REGEXP', 'NOT REGEXP', 'IN (...)', 'NOT IN (...)', 'IS NULL', 'IS NOT NULL' , 'BETWEEN', 'NOT BETWEEN'];
+  }
+	
   public function query($args){
     $type = $this->key('type', $args);
     if($type == '')$type = 'select';
@@ -35,9 +37,6 @@ class Sql{
     return $this->key('sql', $array);
   }
 
-  public function criteria(){
-    return ['=', ' !=', 'LIKE', 'LIKE %...%', 'NOT LIKE', 'REGEXP', 'NOT REGEXP', 'IN (...)', 'NOT IN (...)', 'IS NULL', 'IS NOT NULL' , 'BETWEEN', 'NOT BETWEEN'];
-  }
 
   //---------------------  FUNCTIONS  ---------------------//
   public function db(){
