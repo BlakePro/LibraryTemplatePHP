@@ -1,9 +1,7 @@
 <?php
 namespace blakepro\Template;
-use blakepro\Template\Sql;
-use blakepro\Template\Utilities;
 
-class Html extends Sql implements Utilities{
+class Html extends Sql{
 
   public function __construct($attr = []){
     //$this->html = key('html', $attr);
@@ -75,12 +73,12 @@ class Html extends Sql implements Utilities{
       $icon = $this->icon($icon);
       unset($attr['icon']);
       return $this->tag('button', "$title {$icon}", $attr);
-    
+
     }elseif($icon_left != ''){
       $icon = $this->icon($icon_left);
       unset($attr['icon_left']);
       return $this->tag('button', "{$icon} $title", $attr);
-    
+
     }else return $this->tag('button', $title, $attr);
   }
 
@@ -164,21 +162,21 @@ class Html extends Sql implements Utilities{
         $html .= $this->tag('option', $option, $arg_option);
       }
     }
-    
+
     $attr_label = $this->key('attr_label', $attr);
     if(array_key_exists('attr_label', $attr))unset($attr['attr_label']);
-    
+
     $select =  $this->tag('select', $html, $attr);
-    
+
     if(is_array($attr_label)){
       $label = $this->label($this->key('label', $attr_label));
       if(array_key_exists('label', $attr_label))unset($attr_label['label']);
       return $this->div("{$label}{$select}", $attr_label);
     }else{
       return $select;
-    }  
+    }
   }
-  
+
   //FUNCTION TO GET LABEL
   public function label($html, $attr = []){
     return $this->tag('label', $html, $attr);
@@ -188,12 +186,12 @@ class Html extends Sql implements Utilities{
   public function table($table){
     $html = '';
     $attr_table = $this->key('attr', $table);
-    
+
     //echo $this->pre($attr_table);
     if(array_key_exists('attr', $table))unset($table['attr']);
-    
+
     if(is_array($table)){
-        
+
       //FIX ADD BLANK SPACE IF NOT EXISTS
       if(!empty($table)){
         $max_array = [];
