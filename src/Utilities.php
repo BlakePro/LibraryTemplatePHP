@@ -20,7 +20,7 @@ class Utilities{
     else return TRUE;
   }
 
-  public function remove_str($string, $int = 1, $start = 0){
+  public function remove_string($string, $int = 1, $start = 0){
     if(is_string($string) && $string != '')return trim(substr($string, $start, strlen($string)-$int));
     else return $string;
   }
