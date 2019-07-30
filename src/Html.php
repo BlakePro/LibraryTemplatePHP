@@ -1,7 +1,7 @@
 <?php
 namespace blakepro\Template;
 
-class Html extends blakepro\Template\Sql implements \Utilities{
+class Html extends blakepro\Template\Sql implements blakepro\Template\Utilities{
 
   public function __construct($attr = []){
     //$this->html = key('html', $attr);
