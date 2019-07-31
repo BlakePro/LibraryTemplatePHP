@@ -284,6 +284,11 @@ class Html extends Sql{
     else $html = $array;
     return $this->tag('pre', $html);
   }
+  
+  //FUNCTION TO PRINT ARRAY OR STRING PHP
+  public function print($array){
+    return $this->pre($array);
+  }
 
   //FUNCTION TO COMPRESS HTML
   public function html($html, $echo = TRUE){
