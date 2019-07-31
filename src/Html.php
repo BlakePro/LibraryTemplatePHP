@@ -275,9 +275,9 @@ class Html extends Sql{
     return $this->tag('pre', $html);
   }
   
-  //FUNCTION TO PRINT ARRAY OR STRING PHP
+  //FUNCTION TO DIRECT PRINT ARRAY OR STRING
   public function print($array){
-    return $this->pre($array);
+    print $this->pre($array);
   }
 
   //FUNCTION TO COMPRESS HTML
