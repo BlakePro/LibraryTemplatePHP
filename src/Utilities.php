@@ -15,6 +15,16 @@ class Utilities{
   public function decrypt($string){
     return openssl_decrypt($string, "AES-128-ECB", $this->encryption_key);
   }
+   
+  //FUNCTION TO ADD CURRENCY
+  public function currency($number, $currency = '$', $decimal = 2){
+  	if(!is_numeric($number))$number = 0;
+    if(!is_numeric($decimal))$decimal = 2;
+    if($number < 0){
+      $number = $number * (-1);
+      return '-'.$currency.number_format($number, $decimal);
+    }else return $currency.number_format($number, $decimal);
+  }
 
   public function in_string($search, $string){
     $bool = strpos($string, $search);
