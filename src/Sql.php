@@ -530,11 +530,11 @@ class Sql extends Utilities{
               
               if(is_array($val_select)){
                 foreach($val_select as $k_val => $v_val){
-	 	  if(array_key_exists($v_val, $arr)){
+	 	  //if(array_key_exists($v_val, $arr)){
 		    $name_val = "{$name_table}__{$v_val}";
 		    $n_val = $this->key($name_val, $arr);
 		    $return[$arr_named_key][$v_val] = $n_val;
-		  }
+		  //}
                 }
               }else{
                 if($val_select == ''){
