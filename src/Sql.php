@@ -325,21 +325,20 @@ class Sql extends Utilities{
                   else $option_criteria = 'NOT IN';
 
                 }else{
-
   								$option_criteria = $this->key($option_sel_criteria, $array_criteria_where);
-  	              if(is_array($value_criteria)){
-  	                $array_pdo = $this->where($value_criteria);
-  	                $where_table .= " AND $field_name {$option_criteria} ({$array_pdo['where']})";
-  	                foreach($array_pdo['array'] as $kpdo => $vpdo){
-  	                  $params[] = $vpdo;
-  	                  $all_params[] = $vpdo;
-  	                }
-  	              }else{
-  	                $where_table .= " AND $field_name {$option_criteria} (?)";
-  	                $params[] = $value_criteria;
-  	                $all_params[] = $value_criteria;
-  	              }
                 }
+	              if(is_array($value_criteria)){
+	                $array_pdo = $this->where($value_criteria);
+	                $where_table .= " AND $field_name {$option_criteria} ({$array_pdo['where']})";
+	                foreach($array_pdo['array'] as $kpdo => $vpdo){
+	                  $params[] = $vpdo;
+	                  $all_params[] = $vpdo;
+	                }
+	              }else{
+	                $where_table .= " AND $field_name {$option_criteria} (?)";
+	                $params[] = $value_criteria;
+	                $all_params[] = $value_criteria;
+	              }
               }
             }
           }
