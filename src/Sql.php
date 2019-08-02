@@ -365,7 +365,6 @@ class Sql extends Utilities{
   public function description($table = [], $db = ''){
     $arr_not_null = $arr_rows_table = $arr_rows = $arr_sql_desc_key = $arr_key_pairs = $arr_sql_field_key = $arr_key_pairs_table = [];
     if(!empty($table)){
-      //echo $db, print_r($table, TRUE).'<hr>';
       foreach($table as $no_table => $name_table){
         $name_table_col = $name_table;
 
