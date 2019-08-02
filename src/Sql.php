@@ -522,6 +522,7 @@ class Sql extends Utilities{
     if(is_array($array) && !empty($array)){
       foreach($array as $norow => $arr){
         if(is_array($arr) && !empty($arr)){
+          print print_r($arr);
           foreach($arr as $field => $val){
             $name_key = "{$name_table}__{$key_select}";
             
@@ -529,12 +530,12 @@ class Sql extends Utilities{
               $arr_named_key = $arr[$name_key];
               
               if(is_array($val_select)){
-                foreach($arr as $ka => $va){
-                  foreach($val_select as $k_val => $v_val){
-                    if($ka == $v_val){
-                      $return[$arr_named_key][str_replace("{$name_table}__", '', $ka)] = $va;
-                    }
-                  }
+                print print_r($val_select);
+                foreach($val_select as $k_val => $v_val){
+                  $name_val = "{$name_table}__{$v_val}";
+                  $n_key = $this->key($name_key, $arr);
+                  $n_val = $this->key($name_val, $arr);
+                  $return[$arr_named_key][$n_key] = $n_val;
                 }
               }else{
                 if($val_select == ''){
