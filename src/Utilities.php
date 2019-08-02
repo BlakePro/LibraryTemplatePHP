@@ -36,6 +36,23 @@ class Utilities{
     if(is_string($string) && $string != '')return trim(substr($string, $start, strlen($string)-$int));
     else return $string;
   }
+  
+  //REMOVE SPECIAL CHARACTER STRING
+  public function remove_special_character($string, $n_char = TRUE){
+      $character = [
+       'Š' => 'S', 'š' => 's', 'Ž' => 'Z', 'ž' => 'z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 
+       'É' => 'E', 'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O', 
+       'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'ß' => 'B','à' => 'A', 'á' => 'A', 'â' => 'A', 'ã' => 'A', 'ä' => 'A', 'å' => 'A',
+       'æ' => 'A', 'ç' => 'C', 'è' => 'E', 'é' => 'O', 'ê' => 'O', 'ë' => 'U', 'ì' => 'I', 'í' => 'I', 'î' => 'I', 'ï' => 'I', 'ð' => 'O', 'ò' => 'O', 'ó' => 'O',
+       'ô' => 'O', 'õ' => 'O', 'ö' => 'O', 'ø' => 'O', 'ù' => 'U', 'ú' => 'U', 'û' => 'U', 'ý' => 'Y', 'þ' => 'B', 'ÿ' => 'Y'
+     ];
+     if($n_char){
+       $character['Ñ'] = 'N';
+       $character['ñ'] = 'n';
+     }
+     $string = strtr($string, $character));
+     return $string;
+  }
 
   public function key($key, $array, $default = ''){
     return is_array($array) ? array_key_exists($key, $array) ? $array[$key] : $default : null;
