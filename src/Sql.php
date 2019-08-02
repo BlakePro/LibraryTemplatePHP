@@ -500,9 +500,9 @@ class Sql extends Utilities{
               }
             }
           }
-        }
-  	$where_table = trim(substr(trim($where_table), 3));
-  	if($where_table != '')$where_table = "WHERE {$where_table}";
+          }
+      	$where_table = trim(substr(trim($where_table), 3));
+      	if($where_table != '')$where_table = "WHERE {$where_table}";
         $sql = "DELETE FROM {$db}{$name_table} $where_table";
         $return['sql'][$name_table] = $this->query_print($sql, $params);
 
@@ -510,34 +510,33 @@ class Sql extends Utilities{
           $arr_data_rows = $this->sql($sql, $params, FALSE);
           $return[$name_table] = $arr_data_rows;
         }else{
-		$return['state'] = TRUE;
-  		$return['message'] = 'Not allowed empty where';
- 	}
+          $return['state'] = TRUE;
+          $return['message'] = 'Not allowed empty where';
+        }
       }
     }
     return $return;
   }
 
   public function parse($array, $key_select, $val_select, $name_table, $option_select = '', $return_option = TRUE, $empty_option = TRUE){
-     $return = [];
-     if(is_array($array) && !empty($array)){
-  	foreach($array as $norow => $arr){
-
+    $return = [];
+    if(is_array($array) && !empty($array)){
+      foreach($array as $norow => $arr){
         if(is_array($arr) && !empty($arr)){
           foreach($arr as $field => $val){
             $name_key = "{$name_table}__{$key_select}";
-     
+            
             if(isset($arr[$name_key])){
-		$arr_named_key = $arr[$name_key];
+              $arr_named_key = $arr[$name_key];
+              
               if(is_array($val_select)){
                 foreach($val_select as $k_val => $v_val){
-		  
-                  if(array_key_exists($v_val, $val)){
-                    $return[$arr_named_key][str_replace("{$name_table}__", '', $v_val)] = $arr_named_key[$v_val];
+                  if(array_key_exists($v_val, $arr)){
+                    $return[$arr_named_key][str_replace("{$name_table}__", '', $v_val)] = $arr[$v_val];
                   }
                 }
               }else{
-                 if($val_select == ''){
+                if($val_select == ''){
                   foreach($arr as $ka => $va){
                     $return[$arr_named_key][str_replace("{$name_table}__", '', $ka)] = $va;
                   }
