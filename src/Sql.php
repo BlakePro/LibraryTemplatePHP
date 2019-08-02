@@ -67,7 +67,6 @@ class Sql extends Utilities{
         $array = explode($delimiter, $string);
       }
       if(!empty($array)){
-
         foreach($array as $k => $v){
           if(is_array($v)){
             $array_where[] = $k;
