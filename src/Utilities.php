@@ -18,7 +18,7 @@ class Utilities{
    
   //FUNCTION TO ADD CURRENCY
   public function currency($number, $currency = '$', $decimal = 2){
-  	if(!is_numeric($number))$number = 0;
+  	 if(!is_numeric($number))$number = 0;
     if(!is_numeric($decimal))$decimal = 2;
     if($number < 0){
       $number = $number * (-1);
@@ -79,7 +79,7 @@ class Utilities{
     //BASIC AUTH
     $credentials = $this->key('credentials', $args);
     $timeout = $this->key('timeout', $args, 60);
-  	if($url != ''){
+  	 if($url != ''){
   		$ch = curl_init($url);
   		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
   		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
@@ -107,7 +107,7 @@ class Utilities{
   		}
 
       //RESPONSE
-      $response = curl_exec($ch);
+     $response = curl_exec($ch);
   	  if(curl_errno($ch)){
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $response = "CURL ({$code}):".curl_error($ch);
