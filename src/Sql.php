@@ -140,12 +140,12 @@ class Sql extends Utilities{
         if(isset($arr_set) && !empty($arr_set) && is_array($arr_set)){
           foreach($arr_set as $field_name => $value){
             if(isset($arr_not_null[$name_table][$field_name]) && $value == ''){
-  						$str_empty .= "<li>{$arr_not_null[$name_table][$field_name]}</li>";
-  					}
+              $str_empty .= "<li>{$arr_not_null[$name_table][$field_name]}</li>";
+            }
             if(is_string($value)){
-  						$set_table .= " $field_name = ?,";
-  						$params[] = ($value); //utf8_encode
-  					}
+              $set_table .= " $field_name = ?,";
+              $params[] = ($value); //utf8_encode
+            }
           }
         }
 
@@ -189,8 +189,8 @@ class Sql extends Utilities{
 
         $set_table = trim($this->remove_string($set_table, 1));
 
-  			$where_table = trim(substr(trim($where_table), 3));
-  			if($where_table != '')$where_table = "WHERE {$where_table}";
+        $where_table = trim(substr(trim($where_table), 3));
+        if($where_table != '')$where_table = "WHERE {$where_table}";
 
         $sql = "UPDATE {$name_table} SET $set_table $where_table";
         $return[$name_table]['sql'] = $this->query_print($sql, $params);
