@@ -501,9 +501,8 @@ class Sql extends Utilities{
             }
           }
         }
-
-  			$where_table = trim(substr(trim($where_table), 3));
-  			if($where_table != '')$where_table = "WHERE {$where_table}";
+  	$where_table = trim(substr(trim($where_table), 3));
+  	if($where_table != '')$where_table = "WHERE {$where_table}";
         $sql = "DELETE FROM {$db}{$name_table} $where_table";
         $return['sql'][$name_table] = $this->query_print($sql, $params);
 
@@ -511,9 +510,9 @@ class Sql extends Utilities{
           $arr_data_rows = $this->sql($sql, $params, FALSE);
           $return[$name_table] = $arr_data_rows;
         }else{
-  				$return['state'] = TRUE;
-  				$return['message'] = 'Not allowed empty where';
-  			}
+		$return['state'] = TRUE;
+  		$return['message'] = 'Not allowed empty where';
+ 	}
       }
     }
     return $return;
