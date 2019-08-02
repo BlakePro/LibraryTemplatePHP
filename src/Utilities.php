@@ -50,7 +50,7 @@ class Utilities{
        $character['Ñ'] = 'N';
        $character['ñ'] = 'n';
      }
-     $string = strtr($string, $character));
+     $string = strtr($string, $character);
      return $string;
   }
 
