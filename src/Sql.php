@@ -303,7 +303,7 @@ class Sql extends Utilities{
   					//ROWS
   					$rows .= "{$name_table}.{$field_name} AS {$name_table}__{$field_name}, ";
 
-            //WHERE
+            //WHERE UPDATE VERSION 
             if(isset($where_criteria[$name_table][$field_name]) && is_array($where_criteria[$name_table][$field_name])){
 
               $array_criteria_data = $where_criteria[$name_table][$field_name];
@@ -341,6 +341,8 @@ class Sql extends Utilities{
 	              }
               }
             }
+            //WHERE UPDATE VERSION 
+
           }
           if($where_table != '')$where_table = "WHERE 1 {$where_table}";
           $sql = trim("SELECT * FROM {$db}{$name_table_col} {$where_table}"); //$limit
