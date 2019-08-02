@@ -498,7 +498,7 @@ class Sql extends Utilities{
               }
             }
           }
-          }
+        }
       	$where_table = trim(substr(trim($where_table), 3));
       	if($where_table != '')$where_table = "WHERE {$where_table}";
         $sql = "DELETE FROM {$db}{$name_table} $where_table";
