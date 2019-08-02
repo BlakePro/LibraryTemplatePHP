@@ -528,17 +528,18 @@ class Sql extends Utilities{
             $name_key = "{$name_table}__{$key_select}";
      
             if(isset($arr[$name_key])){
+		$arr_named_key = $arr[$name_key];
               if(is_array($val_select)){
                 foreach($val_select as $k_val => $v_val){
-		  $arr_named_key = $arr[$name_key];
-                  if(array_key_exists($v_val, $arr_named_key)){
+		  
+                  if(array_key_exists($v_val, $val)){
                     $return[$arr_named_key][str_replace("{$name_table}__", '', $v_val)] = $arr_named_key[$v_val];
                   }
                 }
               }else{
                  if($val_select == ''){
                   foreach($arr as $ka => $va){
-                    $return[$arr[$name_key]][str_replace("{$name_table}__", '', $ka)] = $va;
+                    $return[$arr_named_key][str_replace("{$name_table}__", '', $ka)] = $va;
                   }
                 }else{
                   $name_val = "{$name_table}__{$val_select}";
