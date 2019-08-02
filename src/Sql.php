@@ -196,9 +196,8 @@ class Sql extends Utilities{
         $return[$name_table]['sql'] = $this->query_print($sql, $params);
         $return[$name_table]['state'] = FALSE;
 
-        if($str_empty != ''){
-  				$return[$name_table]['message'] = "Fill: <ul>{$str_empty}</ul>";
-        }else{
+        if($str_empty != '')$return[$name_table]['message'] = "Fill: <ul>{$str_empty}</ul>";
+        else{
           if(!empty($params) && $set_table != '' && $where_table != ''){
             $return[$name_table] = $this->sql($sql, $params, FALSE);
           }else{
@@ -224,7 +223,7 @@ class Sql extends Utilities{
       $where_criteria = $this->key('where', $data);
       $limit = $this->key('limit', $data);
       $on = $this->key('on', $data);
-  		$group = $this->key('group', $data);
+      $group = $this->key('group', $data);
       $order = $this->key('order', $data);
 
       if(is_numeric($limit) && $limit > 0)$limit = "LIMIT $limit"; else $limit = '';
