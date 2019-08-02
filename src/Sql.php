@@ -523,30 +523,38 @@ class Sql extends Utilities{
   }
 
   public function parse($array, $key_select, $val_select, $name_table, $option_select = '', $return_option = TRUE, $empty_option = TRUE){
-  	$return = [];
-  	if(is_array($array) && !empty($array)){
-  		foreach($array as $norow => $arr){
+     $return = [];
+     if(is_array($array) && !empty($array)){
+  	foreach($array as $norow => $arr){
 
         if(is_array($arr) && !empty($arr)){
           foreach($arr as $field => $val){
             $name_key = "{$name_table}__{$key_select}";
-            $name_val = "{$name_table}__{$val_select}";
-
+     
             if(isset($arr[$name_key])){
-        			if($val_select == ''){
-                foreach($arr as $ka => $va){
-                  $return[$arr[$name_key]][str_replace("{$name_table}__", '', $ka)] = $va;
+              if(is_array($val_select)){
+                foreach($val_select as $k_val => $v_val){
+                  if(array_key_exists($v_val, $arr)){
+                    $return[$arr[$name_key]][str_replace("{$name_table}__", '', $v_val)] = $arr[$v_val];
+                  }
                 }
               }else{
-                $n_key = $this->key($name_key, $arr);
-                $n_val = $this->key($name_val, $arr);
-                $return[$n_key] = $n_val;
+                 if($val_select == ''){
+                  foreach($arr as $ka => $va){
+                    $return[$arr[$name_key]][str_replace("{$name_table}__", '', $ka)] = $va;
+                  }
+                }else{
+                  $name_val = "{$name_table}__{$val_select}";
+                  $n_key = $this->key($name_key, $arr);
+                  $n_val = $this->key($name_val, $arr);
+                  $return[$n_key] = $n_val;
+                }
               }
             }
           }
         }
-  		}
-  	}
+      }
+    }
     $option = [];
     if($return_option){
       if(!empty($return)){
