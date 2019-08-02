@@ -201,9 +201,9 @@ class Sql extends Utilities{
           if(!empty($params) && $set_table != '' && $where_table != ''){
             $return[$name_table] = $this->sql($sql, $params, FALSE);
           }else{
-  					$return[$name_table]['state'] = FALSE;
-  					$return[$name_table]['message'] = 'Not empty where allowed';
-  				}
+            $return[$name_table]['state'] = FALSE;
+            $return[$name_table]['message'] = 'Not empty where allowed';
+          }
         }
       }
     }
