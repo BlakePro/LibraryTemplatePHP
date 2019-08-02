@@ -529,9 +529,11 @@ class Sql extends Utilities{
               $arr_named_key = $arr[$name_key];
               
               if(is_array($val_select)){
-                foreach($val_select as $k_val => $v_val){
-                  if(array_key_exists($v_val, $arr)){
-                    $return[$arr_named_key][str_replace("{$name_table}__", '', $v_val)] = $arr[$v_val];
+                foreach($arr as $ka => $va){
+                  foreach($val_select as $k_val => $v_val){
+                    if($ka == $v_val){
+                      $return[$arr_named_key][str_replace("{$name_table}__", '', $ka)] = $va;
+                    }
                   }
                 }
               }else{
