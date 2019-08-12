@@ -40,7 +40,6 @@ class Sql extends Utilities{
     return $this->key('sql', $array);
   }
 
-
   //---------------------  FUNCTIONS  ---------------------//
   public function db(){
     $connect = '';
