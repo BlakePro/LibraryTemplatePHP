@@ -558,7 +558,7 @@ class Sql extends Utilities{
       if(!empty($return)){
         if($empty_option)$option[] = ['option' => '', 'value' => ''];
         foreach($return as $val => $opt){
-	  if($encrypt)$val = $this->encrypt($val);
+	  if($encrypt)$val = $this->encrypt($val, $this->encryption_key);
           else $val = $val;
           if($option_select != '' && $option_select == $val)$option[] = ['value' => $val, 'option' => $opt, 'selected' => 'selected'];
           else $option[] = ['option' => $opt, 'value' => $val];
