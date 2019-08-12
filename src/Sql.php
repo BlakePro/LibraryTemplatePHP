@@ -516,7 +516,7 @@ class Sql extends Utilities{
     return $return;
   }
 
-  public function parse($array, $key_select, $val_select, $name_table, $option_select = '', $return_option = TRUE, $empty_option = TRUE){
+  public function parse($array, $key_select, $val_select, $name_table, $option_select = '', $return_option = TRUE, $empty_option = TRUE, $encrypt = FALSE){
     $return = [];
     if(is_array($array) && !empty($array)){
       foreach($array as $norow => $arr){
@@ -558,6 +558,8 @@ class Sql extends Utilities{
       if(!empty($return)){
         if($empty_option)$option[] = ['option' => '', 'value' => ''];
         foreach($return as $val => $opt){
+	  if($encrypt)$val = $this->encrypt($val);
+          else $val = $val;
           if($option_select != '' && $option_select == $val)$option[] = ['value' => $val, 'option' => $opt, 'selected' => 'selected'];
           else $option[] = ['option' => $opt, 'value' => $val];
         }
