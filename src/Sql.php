@@ -134,7 +134,7 @@ class Sql extends Utilities{
         $str_empty = $set_table = $where_table = '';
         $params = [];
 
-        /*-------- SET --------*/
+        //-------- SET --------
         if(isset($arr_set) && !empty($arr_set) && is_array($arr_set)){
           foreach($arr_set as $field_name => $value){
             if(isset($arr_not_null[$name_table][$field_name]) && $value == ''){
@@ -147,7 +147,7 @@ class Sql extends Utilities{
           }
         }
 
-        /*-------- WHERE --------*/
+        //-------- WHERE --------
         if(isset($where_criteria[$name_table]) && !empty($where_criteria[$name_table]) && is_array($where_criteria[$name_table])){
 
           foreach($where_criteria[$name_table] as $field_name => $array_criteria_data){
