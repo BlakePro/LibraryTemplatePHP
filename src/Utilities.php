@@ -72,7 +72,7 @@ class Utilities{
   }
    
   function is_email($email) {
-	   return filter_var($email, FILTER_VALIDATE_EMAIL) ? FALSE : TRUE;
+	   return filter_var($email, FILTER_VALIDATE_EMAIL) ? TRUE : FALSE;
   }
 
   public function curl($args = []){
