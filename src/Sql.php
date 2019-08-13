@@ -286,7 +286,7 @@ class Sql extends Utilities{
   			if($order_by != '')$order_by = "ORDER BY $order_by";
   		}
 
-  		//ROWS
+  	//ROWS
       foreach($table as $no_table => $name_table){
         $name_table_col = $name_table;
         $name_table = $this->get_table_name($name_table, $db);
@@ -461,7 +461,7 @@ class Sql extends Utilities{
         $where_table = '';
         $params = [];
 
-        /*-------- WHERE --------*/
+        //-------- WHERE --------
         if(isset($where_criteria[$name_table]) && !empty($where_criteria[$name_table]) && is_array($where_criteria[$name_table])){
 
           foreach($where_criteria[$name_table] as $field_name => $array_criteria_data){
