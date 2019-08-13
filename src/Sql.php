@@ -515,59 +515,6 @@ class Sql extends Utilities{
     return $return;
   }
 
-  public function parse($array, $key_select, $val_select, $name_table, $option_select = '', $return_option = TRUE, $empty_option = TRUE, $encrypt = FALSE){
-    $return = [];
-    if(is_array($array) && !empty($array)){
-      foreach($array as $norow => $arr){
-        if(is_array($arr) && !empty($arr)){
-          
-          foreach($arr as $field => $val){
-            $name_key = "{$name_table}__{$key_select}";
-            
-            if(isset($arr[$name_key])){
-              $arr_named_key = $arr[$name_key];
-              
-              if(is_array($val_select)){
-                foreach($val_select as $k_val => $v_val){
-	 	  //if(array_key_exists($v_val, $arr)){
-		    $name_val = "{$name_table}__{$v_val}";
-		    $n_val = $this->key($name_val, $arr);
-		    $return[$arr_named_key][$v_val] = $n_val;
-		  //}
-                }
-              }else{
-                if($val_select == ''){
-                  foreach($arr as $ka => $va){
-                    $return[$arr_named_key][str_replace("{$name_table}__", '', $ka)] = $va;
-                  }
-                }else{
-                  $name_val = "{$name_table}__{$val_select}";
-                  $n_key = $this->key($name_key, $arr);
-                  $n_val = $this->key($name_val, $arr);
-                  $return[$n_key] = $n_val;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    $option = [];
-    if($return_option){
-      if(!empty($return)){
-        if($empty_option)$option[] = ['option' => '', 'value' => ''];
-        foreach($return as $val => $opt){
-	  if($encrypt)$val = $this->encrypt($val);
-          else $val = $val;
-          if($option_select != '' && $option_select == $val)$option[] = ['value' => $val, 'option' => $opt, 'selected' => 'selected'];
-          else $option[] = ['option' => $opt, 'value' => $val];
-        }
-      }
-    }else $option = $return;
-
-    return $option;
-  }
-
   private function get_table_name($name_table, $db){
     if($db == '')$name_table = substr(strstr($name_table, '.', FALSE), 1);
     return $name_table;
