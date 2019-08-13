@@ -167,23 +167,23 @@ function get_user_ip(){
   		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
       //DATA
-  		if(!empty($data)){
-  			curl_setopt($ch,CURLOPT_FOLLOWLOCATION, TRUE);
-  			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-  			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data, '', '&'));
-        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+  	if(!empty($data)){
+  		curl_setopt($ch,CURLOPT_FOLLOWLOCATION, TRUE);
+ 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+ 		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data, '', '&'));
+        	curl_setopt($ch, CURLOPT_HEADER, FALSE);
       }
 
       //TIMEOUT
-  		if($timeout != ''){
-  			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
-  		}
+  	if($timeout != ''){
+  	  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+          curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+  	}
 
       //BASIC AUTH
-  		if(isset($credentials['user']) && isset($credentials['pass'])){
-  			curl_setopt($ch, CURLOPT_USERPWD, "{$credentials['user']}:{$credentials['pass']}");
-  		}
+      if(isset($credentials['user']) && isset($credentials['pass'])){
+  	curl_setopt($ch, CURLOPT_USERPWD, "{$credentials['user']}:{$credentials['pass']}");
+      }
 
       //RESPONSE
      $response = curl_exec($ch);
