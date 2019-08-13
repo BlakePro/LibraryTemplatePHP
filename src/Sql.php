@@ -9,7 +9,7 @@ class Sql extends Utilities{
     $this->database_name = $this->key('name', $attr);
     $this->database_user = $this->key('user', $attr);
     $this->database_password = $this->key('password', $attr);
-    //$this->encryption_key = $this->key('encryption_key', $attr);
+    $this->encryption_key = $this->key('encryption_key', $attr);
   }
 
   public function criteria(){
