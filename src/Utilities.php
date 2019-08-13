@@ -70,6 +70,10 @@ class Utilities{
     if(FALSE !== stream_resolve_include_path($file))return TRUE;
     else return FALSE;
   }
+   
+  function is_email($email) {
+	   return filter_var($email, FILTER_VALIDATE_EMAIL) ? FALSE : TRUE;
+  }
 
   public function curl($args = []){
     $response = '';
