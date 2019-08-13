@@ -80,6 +80,10 @@ class Utilities{
 	return $this->key('HTTP_USER_AGENT', $_SERVER);
    }
 
+   function get_user_language(){
+   	return $this->key('HTTP_ACCEPT_LANGUAGE', $_SERVER);
+   }
+
 //FUNCTION TO GET IP USER
 function get_user_ip(){
 	foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
