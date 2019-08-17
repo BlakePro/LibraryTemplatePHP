@@ -277,7 +277,7 @@ class Html extends Sql{
   }
   
   //FUNCTION TO DIRECT PRINT ARRAY OR STRING
-  public function print($array){
+  public function print_pre($array){
     print $this->pre($array);
   }
 
