@@ -135,7 +135,7 @@ class Html extends Sql{
     return $html;
   }
 
-  //FUNCTION TO GET HR
+  //FUNCTION TO GET HR HTML
   public function hr($no = ''){
     $html = '';
     if(is_numeric($no) && $no > 0)for($i = 0; $i <= $no; ++$i)$html .= '<hr>';
@@ -143,17 +143,17 @@ class Html extends Sql{
     return $html;
   }
 
-  //FUNCTION TO GET HEADINGS
+  //FUNCTION TO GET HEADINGS HTML (h1, h2, h3, h4, h5, h6)
   public function h($number, $html, $attr = []){
     return $this->tag("h{$number}", $html, $attr);
   }
 
-  //FUNCTION TO GET BOLD
+  //FUNCTION TO GET BOLD HTML
   public function b($html, $attr = []){
     return $this->tag('b', $html, $attr);
   }
 
-  //FUNCTION TO GET SELECT
+  //FUNCTION TO GET SELECT HTML
   public function select($array, $attr = []){
     $html = '';
     if(!empty($array) && is_array($array)){
