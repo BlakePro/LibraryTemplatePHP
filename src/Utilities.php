@@ -76,12 +76,12 @@ class Utilities{
   }
    
   function is_email($email) {
-	   return filter_var($email, FILTER_VALIDATE_EMAIL) ? TRUE : FALSE;
+    return filter_var($email, FILTER_VALIDATE_EMAIL) ? TRUE : FALSE;
   }
 
    //FUNCTION TO GET USER AGENT IP
    function get_user_agent(){
-	return $this->key('HTTP_USER_AGENT', $_SERVER);
+     return $this->key('HTTP_USER_AGENT', $_SERVER);
    }
 
    function get_user_language(){
