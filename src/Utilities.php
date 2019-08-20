@@ -35,7 +35,11 @@ class Utilities{
   public function just_number($string){
     return preg_replace('~\D~', '', $string);
   }
-
+	
+  public function just_letter($string){
+    return preg_replace('/[^a-zA-Z]/', '', $string);
+  }
+	
   public function remove_string($string, $int = 1, $start = 0){
     if(is_string($string) && $string != '')return trim(substr($string, $start, strlen($string)-$int));
     else return $string;
