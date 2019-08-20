@@ -195,12 +195,12 @@ function get_user_ip(){
 
       //RESPONSE
      $response = curl_exec($ch);
-  	  if(curl_errno($ch)){
+     if(curl_errno($ch)){
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $response = "CURL ({$code}):".curl_error($ch);
       }
-  	  curl_close($ch);
-  	}
-  	return $response;
+     curl_close($ch);
+     }
+     return $response;
   }
 }
