@@ -24,7 +24,7 @@ class Html extends Sql{
 
   //FUNCTION TO CREATE HTML TAG
   public function tag($name, $html, $attr = [], $close_tag = TRUE){
-    if(is_string($name) && is_string($html)){
+    if(is_string($name) && (is_numeric($html) || is_string($html))){
       $html_attr = $this->attr($attr);
       if($close_tag)return "<{$name}{$html_attr}>{$html}</{$name}>";
       else return "<{$name}{$html_attr}/>";
