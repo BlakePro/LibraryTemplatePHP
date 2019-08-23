@@ -140,7 +140,7 @@ class Sql extends Utilities{
             if(isset($arr_not_null[$name_table][$field_name]) && $value == ''){
               $str_empty .= "<li>{$arr_not_null[$name_table][$field_name]}</li>";
             }
-            if(is_string($value)){
+            if($value != ''){
               $set_table .= " $field_name = ?,";
               $params[] = ($value); //utf8_encode
             }
@@ -286,21 +286,21 @@ class Sql extends Utilities{
   			if($order_by != '')$order_by = "ORDER BY $order_by";
   		}
 
-  	//ROWS
+      //ROWS
       foreach($table as $no_table => $name_table){
         $name_table_col = $name_table;
         $name_table = $this->get_table_name($name_table, $db);
         $where_table = '';
         $params = [];
-  			$arr_rows = $this->key($name_table, $arr_sql_fields);
-  			$val_join = mb_strtoupper(trim($this->key($no_table, $options)));
-  			if(!in_array($val_join, array('LEFT', 'RIGHT', 'INNER')))$val_join = '';
+  	$arr_rows = $this->key($name_table, $arr_sql_fields);
+  	$val_join = mb_strtoupper(trim($this->key($no_table, $options)));
+  	if(!in_array($val_join, array('LEFT', 'RIGHT', 'INNER')))$val_join = '';
 
         if(is_array($arr_rows) && !empty($arr_rows)){
           foreach($arr_rows as $nrtab => $field_name){
 
-  					//ROWS
-  					$rows .= "{$name_table}.{$field_name} AS {$name_table}__{$field_name}, ";
+  	     //ROWS
+  	     $rows .= "{$name_table}.{$field_name} AS {$name_table}__{$field_name}, ";
 
             //WHERE UPDATE VERSION 
             if(isset($where_criteria[$name_table][$field_name]) && is_array($where_criteria[$name_table][$field_name])){
@@ -315,8 +315,8 @@ class Sql extends Utilities{
                   $option_criteria = $this->key(2, $array_criteria_where);
                   if(is_string($value_criteria))$value_criteria = "%{$value_criteria}%";
 
-  							}elseif(in_array($option_sel_criteria, [9, 10])){
-  								if($option_sel_criteria == 9)$where_table = "AND $field_name IS NULL";
+  		}elseif(in_array($option_sel_criteria, [9, 10])){
+  		  if($option_sel_criteria == 9)$where_table = "AND $field_name IS NULL";
                   else $where_table = "AND $field_name IS NOT NULL";
 
                 }elseif(in_array($option_sel_criteria, [7, 8])){
@@ -324,7 +324,7 @@ class Sql extends Utilities{
                   else $option_criteria = 'NOT IN';
 
                 }else{
-  								$option_criteria = $this->key($option_sel_criteria, $array_criteria_where);
+  		   $option_criteria = $this->key($option_sel_criteria, $array_criteria_where);
                 }
 	              if(is_array($value_criteria)){
 	                $array_pdo = $this->where($value_criteria);
@@ -425,7 +425,7 @@ class Sql extends Utilities{
             if(isset($arr_not_null[$name_table][$field_name]) && $value == ''){
   						$str_empty .= "<li>{$arr_not_null[$name_table][$field_name]}</li>";
   					}
-            if(is_string($value)){
+            if($value != ''){
               $set_table .= "{$field_name} = ?, ";
               $params[] = ($value); //utf8_encode
             }
