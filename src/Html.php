@@ -87,7 +87,7 @@ class Html extends Sql{
   public function input($attr = [], $label = ''){
     $html_attr = $this->attr($attr);
     $input = "<input{$html_attr}/>";
-
+    
     if($label == '')return $input;
     else{
       return "<div class='form-group form-group-default'>
