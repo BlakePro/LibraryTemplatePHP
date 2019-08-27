@@ -79,13 +79,13 @@ class Utilities{
     return $this->key($key, $_GET);
   }
 	
-  public function arr_count($key, $array){  
+  public function count_array($key, $array){  
     $data = $this->key($key, $array);
     if(!is_array($data))$data = [];
     return count($data);
   }
 	
-  public function arr_sum($key, $array){  
+  public function sum_array($key, $array){  
     $data = $this->key($key, $array);
     if(!is_array($data))$data = [];
     return array_sum($data);
