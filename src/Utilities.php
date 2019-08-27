@@ -78,7 +78,19 @@ class Utilities{
   public function get($key){
     return $this->key($key, $_GET);
   }
-
+	
+  public function arr_count($key, $array){  
+    $data = $this->key($key, $array);
+    if(!is_array($data))$data = [];
+    return count($data);
+  }
+	
+  public function arr_sum($key, $array){  
+    $data = $this->key($key, $array);
+    if(!is_array($data))$data = [];
+    return array_sum($data);
+  }
+	
   public function file_check($file){
     if(FALSE !== stream_resolve_include_path($file))return TRUE;
     else return FALSE;
