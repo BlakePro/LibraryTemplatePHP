@@ -173,6 +173,7 @@ class Utilities{
 
     return $option;
   }
+	
   public function curl($args = []){
     $response = '';
     $url = $this->key('url', $args);
