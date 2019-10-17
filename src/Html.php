@@ -34,7 +34,7 @@ class Html extends Sql{
   //FUNCTION TO GET ROW / GRID BOOSTRAP
   public function row($array){
     $data = '';
-    $delete = ['html', 'col', 'xs', 'sm', 'md', 'lg', 'xl', 'class'];
+    $delete = ['xs', 'sm', 'md', 'lg', 'xl', 'col', 'html', 'class'];
   	if(!empty($array)){
   		foreach($array as $k => $row){
         $style = '';
