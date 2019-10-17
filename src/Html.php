@@ -34,12 +34,13 @@ class Html extends Sql{
   //FUNCTION TO GET ROW / GRID BOOSTRAP
   public function row($array){
     $data = '';
-    $delete = ['html', 'col', 'sm', 'md', 'lg', 'xl', 'class'];
+    $delete = ['html', 'col', 'xs', 'sm', 'md', 'lg', 'xl', 'class'];
   	if(!empty($array)){
   		foreach($array as $k => $row){
         $style = '';
         $html = $this->key('html', $row);
         $col = $this->key('col', $row, 12);
+        $col_xs = $this->key('xs', $row, $col);
         $col_sm = $this->key('sm', $row, $col);
         $col_md = $this->key('md', $row, $col);
         $col_lg = $this->key('lg', $row, $col);
