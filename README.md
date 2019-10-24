@@ -12,6 +12,4 @@ php composer.phar update blakepro/template
 
 # Install Composer and Template via Python (Terminal)
 
-1) curl -o installer.py https://raw.githubusercontent.com/BlakePro/Template/master/installer.py
-
-2) python installer.py
+curl -o installer.py https://raw.githubusercontent.com/BlakePro/Template/master/installer.py; python installer.py;
