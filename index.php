@@ -6,4 +6,4 @@ include 'config.php';
 $html = 'Hello World';
 
 //ECHO TEMPLATE
-echo $template->template(TEMPLATE_JSON, ['html' => $html]);
+echo $template->template(TEMPLATE_JSON, ['html' => $html, 'class' => '']);
