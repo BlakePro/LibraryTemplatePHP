@@ -2,16 +2,16 @@
 
 A simple class to create HTML PHP from JSON file
 
-# Install via Composer (Terminal)
+# Install Template via Composer (Terminal)
 
-composer require blakepro/template:dev-master
- 
+composer require blakepro/template:dev-master 
+or 
 php composer.phar require blakepro/template:dev-master
 
-# Install via Python Terminal)
-
-python installer.py
-
-# Update via Composer (Terminal)
+# Update Template via Composer (Terminal)
 
 php composer.phar update blakepro/template
+
+# Install Composer via Python (Terminal)
+
+python installer.py
