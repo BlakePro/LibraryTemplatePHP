@@ -10,7 +10,7 @@ php composer.phar require blakepro/template:dev-master
 
 php composer.phar update blakepro/template
 
-# Install Composer via Python (Terminal)
+# Install Composer and Template via Python (Terminal)
 
 1) curl -o installer.py https://raw.githubusercontent.com/BlakePro/Template/master/installer.py
 
