@@ -21,12 +21,12 @@
       "href": ""
     },
     {
-      "rel": "manifest",
+      "rel": "mask-icon",
+      "color": "#007be8",
       "href": ""
     },
     {
-      "rel": "mask-icon",
-      "color": "#FFFFFF",
+      "rel": "manifest",
       "href": ""
     }
   ],
@@ -60,11 +60,11 @@
     },
     {
       "name": "msapplication-TileColor",
-      "content": "#FFFFFF"
+      "content": ""
     },
     {
       "name": "theme-color",
-      "content": "#FFFFFF"
+      "content": ""
     },
     {
       "name": "description",
@@ -76,16 +76,7 @@
     }
   ],
   "css": [
-    "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css",
-    "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css",
-    "https://use.fontawesome.com/releases/v5.8.1/css/all.css""
   ],
   "js": [
-    "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/jquery.actual/1.0.19/jquery.actual.min.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js",
   ]
 }
