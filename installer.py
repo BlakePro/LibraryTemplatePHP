@@ -5,3 +5,7 @@ os.system("php composer-setup.php");
 os.system("php -r \"unlink('composer-setup.php');\"");
 os.system("php composer.phar require blakepro/template:dev-master");
 os.system("php -r \"unlink('installer.py');\"");
+os.system("curl -o config.php https://raw.githubusercontent.com/BlakePro/Template/master/config.php");
+os.system("curl -o index.php https://raw.githubusercontent.com/BlakePro/Template/master/index.php");
+print "BlakePro Template installed succesfully"
+print "View file index.php"
