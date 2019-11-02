@@ -337,7 +337,7 @@ class Html extends Sql{
     if(!empty($configuration_css)){
       foreach($configuration_css as $no => $data_css){
         if(is_array($data_css))$template .= $this->tag('link', '', $data_css, FALSE);
-        else $template .= $this->tag('link', '', ['href' => $url, 'rel' => 'stylesheet', 'type' => 'text/css'], FALSE);
+        else $template .= $this->tag('link', '', ['href' => $data_css, 'rel' => 'stylesheet', 'type' => 'text/css'], FALSE);
       }
     }
     
