@@ -6,7 +6,7 @@ os.system("php composer-setup.php")
 os.system("php -r \"unlink('composer-setup.php');\"")
 os.system("php composer.phar require blakepro/template:dev-master")
 os.system("php -r \"unlink('installer.py');\"")
-print "\n Loading... \n"
+print "\nLoading... \n"
 os.system("curl -s -o template.json https://raw.githubusercontent.com/BlakePro/Template/master/template.json")
 os.system("curl -s -o config.php https://raw.githubusercontent.com/BlakePro/Template/master/config.php")
 os.system("curl -s -o index.php https://raw.githubusercontent.com/BlakePro/Template/master/index.php")
