@@ -4,7 +4,7 @@
   include 'vendor/autoload.php';
 
   //CONFIG TEMPLATE
-  define('TEMPLATE_JSON', 'insertpagetemplate');
+  define('TEMPLATE_JSON', 'insertpath/template.json'); //path or url json file (view template.json)
   define('ENCRYPTION_KEY', 'insertkeyhere');
   
   //DATABASE PARAMETERS MYSQL
