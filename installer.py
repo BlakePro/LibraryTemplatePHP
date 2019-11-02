@@ -10,4 +10,4 @@ os.system("curl -s -o template.json https://raw.githubusercontent.com/BlakePro/T
 os.system("curl -s -o config.php https://raw.githubusercontent.com/BlakePro/Template/master/config.php")
 os.system("curl -s -o index.php https://raw.githubusercontent.com/BlakePro/Template/master/index.php")
 path = os.system("pwd");
-print "\n BlakePro Template installed succesfully \n \n Create file: index.php \n Path: " + path
+print "\n BlakePro Template installed succesfully \n \n  File: index.php \n Path: " + path
