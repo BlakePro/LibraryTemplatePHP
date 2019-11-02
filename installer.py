@@ -11,4 +11,4 @@ os.system("curl -s -o config.php https://raw.githubusercontent.com/BlakePro/Temp
 os.system("curl -s -o index.php https://raw.githubusercontent.com/BlakePro/Template/master/index.php")
 print "BlakePro Template installed succesfully \n \nFile index.php \nPath:\n"
 os.system("pwd");
-print "\n"
+print "\n\n"
