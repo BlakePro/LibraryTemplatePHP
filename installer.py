@@ -9,5 +9,5 @@ print "\n Loading... \n"
 os.system("curl -s -o template.json https://raw.githubusercontent.com/BlakePro/Template/master/template.json")
 os.system("curl -s -o config.php https://raw.githubusercontent.com/BlakePro/Template/master/config.php")
 os.system("curl -s -o index.php https://raw.githubusercontent.com/BlakePro/Template/master/index.php")
-path = os.system("pwd");
-print "\n BlakePro Template installed succesfully \n \n  File: index.php \n Path: " + path
+print "\n BlakePro Template installed succesfully \n \n File:\nindex.php \n Path:"
+os.system("pwd");
