@@ -1,7 +1,7 @@
-# Template
-```
+# Template BlakePro
+
 A simple class to create HTML PHP from JSON file
-```
+
 # Install Template via Composer
 ```
 php composer.phar require blakepro/template:dev-master
