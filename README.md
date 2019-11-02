@@ -10,7 +10,7 @@ php composer.phar require blakepro/template:dev-master
 ```
 php composer.phar update blakepro/template
 ```
-Update Template via Composer (not resolved packages)
+Not resolved packages use
 ```
 php composer.phar update blakepro/template --ignore-platform-reqs
 ```
