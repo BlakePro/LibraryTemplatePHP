@@ -296,7 +296,9 @@ class Html extends Sql{
 
   public function template($url_json, $attr = []){
 
-    $file_json = $this->curl(['url' => $url_json]);
+    //GET JSON LOCAL (INCLUDE ALL PATH) OR REMOTE FILE (URL)
+    if(filter_var($url_json, FILTER_VALIDATE_URL))$file_json = $this->curl(['url' => $url_json]);
+    else $file_json = file_get_contents($url_json);
 
     //JSON FILE CONFIG
     $configuration = json_decode($file_json, TRUE);
@@ -333,10 +335,12 @@ class Html extends Sql{
 
     //CSS FILES
     if(!empty($configuration_css)){
-      foreach($configuration_css as $no => $url){
-        $template .= $this->tag('link', '', ['href' => $url, 'rel' => 'stylesheet', 'type' => 'text/css'], FALSE);
+      foreach($configuration_css as $no => $data_css){
+        if(is_array($data_css))$template .= $this->tag('link', '', $data_css, FALSE);
+        else $template .= $this->tag('link', '', ['href' => $url, 'rel' => 'stylesheet', 'type' => 'text/css'], FALSE);
       }
     }
+    
     //BODY ARGS
     $body = $this->key('html', $attr);
     if(array_key_exists('html', $attr))unset($attr['html']);
@@ -349,8 +353,9 @@ class Html extends Sql{
 
     //JS FILES
     if(!empty($configuration_js)){
-      foreach($configuration_js as $no => $url){
-        $template .= $this->script('', ['src' => $url]);
+      foreach($configuration_js as $no => $data_js){
+        if(is_array($data_js))$template .= $this->script('', $data_js);
+        else $template .= $this->script('', ['src' => $data_js]);
       }
     }
 
