@@ -10,6 +10,10 @@ php composer.phar require blakepro/template:dev-master
 ```
 php composer.phar update blakepro/template
 ```
+# Update Template via Composer (no conflict version PHP)
+```
+php composer.phar update blakepro/template --ignore-platform-reqs
+```
 # Install Composer and Template via Python
 ```
 curl -o installer.py https://raw.githubusercontent.com/BlakePro/Template/master/installer.py -H 'Cache-Control: no-cache' ; python installer.py;
