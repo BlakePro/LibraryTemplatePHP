@@ -18,3 +18,12 @@ php composer.phar update blakepro/template --ignore-platform-reqs
 ```
 curl -o installer.py https://raw.githubusercontent.com/BlakePro/Template/master/installer.py -H 'Cache-Control: no-cache' ; python installer.py;
 ```
+#Usage PHP
+```
+<?php require __DIR__ . '/vendor/autoload.php';
+
+$html = new blakepro\Template\Html();
+$pdo = new blakepro\Template\Sql(['host' => '', 'name' => '', 'user' => '', 'password' => '']);
+$utilities = new blakepro\Template\Utilities(['encryption_key' => '']);
+
+```
