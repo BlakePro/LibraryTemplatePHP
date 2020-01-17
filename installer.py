@@ -1,6 +1,6 @@
 import os
 os.system("php -r \"copy('https://getcomposer.org/installer', 'composer-setup.php');\"")
-os.system("php -r \"if (hash_file('sha384', 'composer-setup.php') === 'a5c698ffe4b8e849a443b120cd5ba38043260d5c4023dbf93e1558871f1f07f58274fc6f4c93bcfd858c6bd0775cd8d1') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;\"")
+os.system("php -r \"if (hash_file('sha384', 'composer-setup.php') === 'c5b9b6d368201a9db6f74e2611495f369991b72d9c8cbd3ffbc63edff210eb73d46ffbfce88669ad33695ef77dc76976') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;\"")
 os.system("php composer-setup.php")
 os.system("php -r \"unlink('composer-setup.php');\"")
 os.system("php composer.phar require blakepro/template:dev-master")
