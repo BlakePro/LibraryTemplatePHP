@@ -289,6 +289,8 @@ class Html extends Sql{
     	$html = str_replace(' >', '>', $html);
     	$html = str_replace(' />', '/>', $html);
       $html = str_replace(' </', '</', $html);
+      //REMOVE HTML COMMENTS
+      $html = preg_replace('/<!--(.|\s)*?-->/', '', $html);
     	if($echo)echo $html;
       else return $html;
     }
