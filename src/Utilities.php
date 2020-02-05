@@ -18,7 +18,7 @@ class Utilities{
    
   //FUNCTION TO ADD CURRENCY
   public function currency($number, $currency = '$', $decimal = 2){
-  	 if(!is_numeric($number))$number = 0;
+    if(!is_numeric($number))$number = 0;
     if(!is_numeric($decimal))$decimal = 2;
     if($number < 0){
       $number = $number * (-1);
@@ -135,11 +135,9 @@ class Utilities{
               
               if(is_array($val_select)){
                 foreach($val_select as $k_val => $v_val){
-	 	  //if(array_key_exists($v_val, $arr)){
-		    $name_val = "{$name_table}__{$v_val}";
-		    $n_val = $this->key($name_val, $arr);
-		    $return[$arr_named_key][$v_val] = $n_val;
-		  //}
+		  $name_val = "{$name_table}__{$v_val}";
+		  $n_val = $this->key($name_val, $arr);
+		  $return[$arr_named_key][$v_val] = $n_val;
                 }
               }else{
                 if($val_select == ''){
