@@ -40,7 +40,6 @@ class Sql extends Utilities{
     return $this->key('sql', $array);
   }
 
-  //---------------------  FUNCTIONS  ---------------------//
   public function db(){
     $connect = '';
     try{
@@ -216,7 +215,7 @@ class Sql extends Utilities{
     $array_criteria_where = $this->criteria();
     if(!empty($table) && is_array($table)){
 
-  		$arr_sql_field_key = [];
+      $arr_sql_field_key = [];
       $debug = $this->key('debug', $data, FALSE);
       $where_criteria = $this->key('where', $data);
       $limit = $this->key('limit', $data);
