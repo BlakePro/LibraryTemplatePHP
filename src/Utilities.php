@@ -185,15 +185,17 @@ class Utilities{
   		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
   		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
   		curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
-  		curl_setopt($ch, CURLOPT_POST, TRUE);
   		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
       //DATA
   	if(!empty($data)){
+		$build_query = http_build_query($data, '', '&');
+		curl_setopt($ch, CURLOPT_POST, TRUE);
   		curl_setopt($ch,CURLOPT_FOLLOWLOCATION, TRUE);
  		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
- 		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data, '', '&'));
+ 		curl_setopt($ch, CURLOPT_POSTFIELDS, $build_query);
         	curl_setopt($ch, CURLOPT_HEADER, FALSE);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-length:'.strlen($build_query)]);
       }
 
       //TIMEOUT
