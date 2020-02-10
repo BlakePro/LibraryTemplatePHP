@@ -23,7 +23,10 @@ curl -o installer.py https://raw.githubusercontent.com/BlakePro/Template/master/
 <?php require __DIR__ . '/vendor/autoload.php';
 
 $html = new blakepro\Template\Html();
+
+//PDO DATABASE
 $pdo = new blakepro\Template\Sql(['host' => '', 'name' => '', 'user' => '', 'password' => '']);
+
 $utilities = new blakepro\Template\Utilities(['encryption_key' => '']);
 
 ```
