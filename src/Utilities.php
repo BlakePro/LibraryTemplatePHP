@@ -181,11 +181,11 @@ class Utilities{
     $credentials = $this->key('credentials', $args);
     $timeout = $this->key('timeout', $args, 60);
     if($url != ''){
-  		$ch = curl_init($url);
-  		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-  		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-  		curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
-  		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+  	$ch = curl_init($url);
+  	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+  	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+ 	curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
+  	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
       //DATA
   	if(!empty($data)){
