@@ -198,7 +198,7 @@ class Utilities{
 		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-length:'.strlen($build_query)]);
       }
 
-      //TIMEOUT
+     	//TIMEOUT
   	if($timeout != ''){
   	  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
           curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
@@ -210,8 +210,8 @@ class Utilities{
       }
 
       //RESPONSE
-     $response = curl_exec($ch);
-     if(curl_errno($ch)){
+      $response = curl_exec($ch);
+      if(curl_errno($ch)){
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $response = "CURL ({$code}):".curl_error($ch);
       }
