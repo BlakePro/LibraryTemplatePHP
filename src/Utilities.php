@@ -180,7 +180,7 @@ class Utilities{
     //BASIC AUTH
     $credentials = $this->key('credentials', $args);
     $timeout = $this->key('timeout', $args, 60);
-  	 if($url != ''){
+    if($url != ''){
   		$ch = curl_init($url);
   		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
   		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
