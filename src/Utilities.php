@@ -27,7 +27,7 @@ class Utilities{
   }
 
   public function in_string($search, $string){
-    $bool = strpos($string, $search);
+    $bool = stripos($string, $search);
     if($bool === FALSE)return FALSE;
     else return TRUE;
   }
