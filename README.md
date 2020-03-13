@@ -30,5 +30,6 @@ $pdo = new blakepro\Template\Sql(['host' => '', 'name' => '', 'user' => '', 'pas
 $utilities = new blakepro\Template\Utilities(['encryption_key' => '']);
 
 ```
-#  Documentation
+#  Documentation / Wiki
 ```
+https://github.com/BlakePro/LibraryTemplatePHP/wiki
