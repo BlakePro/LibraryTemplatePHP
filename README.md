@@ -1,6 +1,6 @@
 # Class HTML / Template PHP
 
-A simple class to create HTML PHP from JSON file
+A simple class to create HTML via PHP from JSON file
 
 # Install Template via Composer
 ```
@@ -22,11 +22,13 @@ curl -o installer.py https://raw.githubusercontent.com/BlakePro/Template/master/
 ```
 <?php require __DIR__ . '/vendor/autoload.php';
 
+//HTML
 $html = new blakepro\Template\Html();
 
-//PDO DATABASE
+//DATABASE
 $pdo = new blakepro\Template\Sql(['host' => '', 'name' => '', 'user' => '', 'password' => '']);
 
+//UTILITIES
 $utilities = new blakepro\Template\Utilities(['encryption_key' => '']);
 
 ```
