@@ -1,6 +1,6 @@
-# Class HTML / Template PHP
+# Class Template PHP / HTML
 
-A simple class to create HTML via PHP from JSON file
+A simple class to create HTML via PHP and template via JSON file
 
 # Install (via Composer)
 ```
