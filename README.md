@@ -1,4 +1,4 @@
-# Class Template PHP / HTML
+# Template Class (PHP / HTML)
 
 A simple class to create HTML via PHP and template via JSON file
 
