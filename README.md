@@ -7,7 +7,7 @@ A simple class to create HTML via PHP and template via JSON file
 php composer.phar require blakepro/template:dev-master
 ```
 
-# Install Composer and Class (via Python script)
+# Install Composer and Class (via Python)
 ```
 curl -o installer.py https://raw.githubusercontent.com/BlakePro/Template/master/installer.py -H 'Cache-Control: no-cache' ; python installer.py;
 ```
