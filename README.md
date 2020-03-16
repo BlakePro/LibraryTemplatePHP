@@ -33,5 +33,5 @@ $utilities = new blakepro\Template\Utilities(['encryption_key' => '']);
 
 ```
 #  Documentation / Wiki
-```
-https://github.com/BlakePro/LibraryTemplatePHP/wiki
+
+[https://github.com/BlakePro/LibraryTemplatePHP/wiki](https://github.com/BlakePro/LibraryTemplatePHP/wiki)
