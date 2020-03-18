@@ -1,6 +1,8 @@
-import os
+import os, sys
+print ('Open https://getcomposer.org/download/ find sha and paste')
+key = input()
 os.system("php -r \"copy('https://getcomposer.org/installer', 'composer-setup.php');\"")
-os.system("php -r \"if (hash_file('sha384', 'composer-setup.php') === 'c5b9b6d368201a9db6f74e2611495f369991b72d9c8cbd3ffbc63edff210eb73d46ffbfce88669ad33695ef77dc76976') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;\"")
+os.system("php -r \"if (hash_file('sha384', 'composer-setup.php') === '" + key + "') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;\"")
 os.system("php composer-setup.php")
 os.system("php -r \"unlink('composer-setup.php');\"")
 os.system("php composer.phar require blakepro/template:dev-master")
