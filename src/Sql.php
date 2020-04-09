@@ -353,7 +353,9 @@ class Sql extends Utilities{
       $sql_join = $this->remove_string($sql_join, 6);
       $rows = $this->remove_string($rows, 2);
 
-      $sql_join = "SELECT $rows FROM ({$sql_join} {$keys}) $group_by $order_by $limit";
+      if(count($table) > 1)$sql_join = "SELECT $rows FROM ({$sql_join} {$keys}) $group_by $order_by $limit";
+      else $sql_join = "SELECT $rows FROM {$sql_join} {$keys} $group_by $order_by $limit";
+	    
       $return = $this->sql($sql_join, $all_params);
   		$return['desc'] = $arr_sql_desc;
   		return $return;
