@@ -40,6 +40,11 @@ class Sql extends Utilities{
     return $this->key('sql', $array);
   }
 
+  public function get_id_insert($array){
+    if(is_array($array) && !empty($array))
+    return $this->key('insert', $this->key('fetch', $this->key(key($array), $array)));
+  }
+
   public function db(){
     $connect = '';
     try{
@@ -67,10 +72,12 @@ class Sql extends Utilities{
       if(!empty($array)){
         foreach($array as $k => $v){
           if(is_array($v)){
+            if($k == '*')$k = '';
             $array_where[] = $k;
             $where .= '?,';
             $where_str .= "'$k',";
           }else{
+            if($v == '*')$v = '';
             $array_where[] = $v;
             $where .= '?,';
             $where_str .= "'$v',";
@@ -139,6 +146,7 @@ class Sql extends Utilities{
             if(isset($arr_not_null[$name_table][$field_name]) && $value == ''){
               $str_empty .= "<li>{$arr_not_null[$name_table][$field_name]}</li>";
             }
+            if($value == 0)$value = '0';
             if($value != ''){
               $set_table .= " $field_name = ?,";
               $params[] = ($value); //utf8_encode
