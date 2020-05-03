@@ -2,8 +2,8 @@
 //INCLUDE CONFIG FILE
 include 'config.php';
 
-//EXMAPLE TEMPLATE
-$html = 'Hello World';
+//CONTENT BODY
+$content = 'Hello World';
 
-//ECHO TEMPLATE
-echo $template->template(TEMPLATE_JSON, ['html' => $html, 'class' => '']);
+//TEMPLATE
+echo $html->template(TEMPLATE_JSON, ['html' => $content, 'class' => '']);

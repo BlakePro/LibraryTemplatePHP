@@ -309,12 +309,12 @@ class Html extends Sql{
       $lang = $this->key('lang', $configuration);
       $title = $this->key('title', $configuration);
       $logo = $this->key('logo', $configuration);
-      $end_body = $this->key('end_body', $configuration);
+      $bodyend = $this->key('bodyend', $configuration);
       $configuration_css = $this->key('css', $configuration);
       $configuration_js = $this->key('js', $configuration);
 
       //REMOVE CONFIGURATION
-      $array_no_params = ['lang', 'title', 'logo', 'css', 'js'];
+      $array_no_params = ['lang', 'title', 'logo', 'css', 'js', 'bodyend'];
       if(!empty($array_no_params)){
         foreach($array_no_params as $k => $param){
           if(array_key_exists($param, $configuration))unset($configuration[$param]);
@@ -361,7 +361,7 @@ class Html extends Sql{
       }
 
       //HTML
-      $template .= "{$end_body}</body></html>";
+      $template .= "{$bodyend}</body></html>";
 
       //RETURN HTML
       return $this->html($template);

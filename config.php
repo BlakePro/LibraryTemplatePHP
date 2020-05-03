@@ -4,9 +4,9 @@
   include 'vendor/autoload.php';
 
   //CONFIG TEMPLATE
-  define('TEMPLATE_JSON', 'insertpath/template.json'); //path or url json file (view template.json)
+  define('TEMPLATE_JSON', 'insertpath/template.json'); //path or url
   define('ENCRYPTION_KEY', 'insertkeyhere');
-  
+
   //DATABASE PARAMETERS MYSQL
   define('DB_HOST', '');
   define('DB_USER', '');
@@ -15,7 +15,7 @@
   define('DB_PREFIX', '');
   define('DB', DB_NAME.'.'.DB_PREFIX);
 
-  //TEMPLATE
-  $template = new blakepro\Template\Html();
+  //DEFINE CLASS TEMPLATE
+  $html = new blakepro\Template\Html();
   $pdo = new blakepro\Template\Sql(['host' => DB_HOST, 'name' => '', 'user' => DB_USER, 'password' => DB_PASSWORD]);
   $utilities = new blakepro\Template\Utilities(['encryption_key' => ENCRYPTION_KEY]);
