@@ -1,5 +1,4 @@
 <?php
-
 namespace blakepro\Template;
 
 class Utilities{
@@ -15,7 +14,7 @@ class Utilities{
   public function decrypt($string){
     return openssl_decrypt($string, "AES-128-ECB", $this->encryption_key);
   }
-   
+
   //FUNCTION TO ADD CURRENCY
   public function currency($number, $currency = '$', $decimal = 2){
     if(!is_numeric($number))$number = 0;
@@ -35,29 +34,29 @@ class Utilities{
   public function just_number($string){
     return preg_replace('~\D~', '', $string);
   }
-	
+
   public function just_letter($string){
     return preg_replace('/[^a-zA-Z]/', '', $string);
   }
-	
+
   public function remove_string($string, $int = 1, $start = 0){
     if(is_string($string) && $string != '')return trim(substr($string, $start, strlen($string)-$int));
     else return $string;
   }
-  
+
   //REMOVE SPECIAL CHARACTER STRING
   public function remove_special_character($string, $n_char = TRUE){
       $character = [
-       	'Š' => 'S', 'š' => 's', 'Ž' => 'Z', 'ž' => 'z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 
-	'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 
-       	'É' => 'E', 'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 
-	'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'o', 
-       	'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'b', 'ß' => 'B',
-	'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a',
-       	'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'I', 
-	'í' => 'i', 'î' => 'i', 'ï' => 'i', 'ð' => 'o', 'ò' => 'o', 'ó' => 'o',
-       	'ô' => 'o', 'õ' => 'o', 'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 
-	'Ú' => 'U', 'þ' => 'b', 'ÿ' => 'y'
+       	'Š' => 'S', 'š' => 's', 'Ž' => 'Z', 'ž' => 'z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A',
+        'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E',
+        'É' => 'E', 'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I',
+        'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'o',
+        'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'b', 'ß' => 'B',
+        'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a',
+        'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'I',
+        'í' => 'i', 'î' => 'i', 'ï' => 'i', 'ð' => 'o', 'ò' => 'o', 'ó' => 'o',
+        'ô' => 'o', 'õ' => 'o', 'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u',
+        'Ú' => 'U', 'þ' => 'b', 'ÿ' => 'y'
      ];
      if($n_char){
        $character['Ñ'] = 'N';
@@ -71,33 +70,41 @@ class Utilities{
     return is_array($array) ? array_key_exists($key, $array) ? $array[$key] : $default : null;
   }
 
-  public function post($key){
-    return $this->key($key, $_POST);
+  public function post($key, $decrypt = FALSE){
+    $data = $this->key($key, $_POST);
+    if($decrypt)$data = $this->decrypt($data);
+    return $data;
   }
 
-  public function get($key){
-    return $this->key($key, $_GET);
+  public function get($key, $decrypt = FALSE){
+    $data = $this->key($key, $_GET);
+    if($decrypt)$data = $this->decrypt($data);
+    return $data;
   }
-	
-  public function count_array($key, $array){  
+
+  public function count_array($key, $array){
     $data = $this->key($key, $array);
     if(!is_array($data))$data = [];
     return count($data);
   }
-	
-  public function sum_array($key, $array){  
+
+  public function sum_array($key, $array){
     $data = $this->key($key, $array);
     if(!is_array($data))$data = [];
     return array_sum($data);
   }
-	
+
+  public function is_file($file){
+    return $this->file_check($file);
+  }
+
+  function is_email($email) {
+    return filter_var($email, FILTER_VALIDATE_EMAIL) ? TRUE : FALSE;
+  }
+
   public function file_check($file){
     if(FALSE !== stream_resolve_include_path($file))return TRUE;
     else return FALSE;
-  }
-   
-  function is_email($email) {
-    return filter_var($email, FILTER_VALIDATE_EMAIL) ? TRUE : FALSE;
   }
 
   //FUNCTION TO GET USER AGENT IP
@@ -112,40 +119,46 @@ class Utilities{
   //FUNCTION TO GET IP USER
   function get_user_ip(){
     foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
-       if(array_key_exists($key, $_SERVER) === TRUE){
-	  foreach(explode(',', $_SERVER[$key]) as $ip){
-            $ip = trim($ip); 
-	    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false)return $ip;
-	  }
-       }
+      if(array_key_exists($key, $_SERVER) === TRUE){
+    	  foreach(explode(',', $_SERVER[$key]) as $ip){
+          $ip = trim($ip);
+    	    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false)return $ip;
+    	  }
+      }
     }
   }
-	
+
   public function parse($array, $key_select, $val_select, $name_table, $option_select = '', $return_option = TRUE, $empty_option = TRUE, $encrypt = FALSE){
     $return = [];
-    if(is_array($array) && !empty($array)){
+    if(is_array($array) && !empty($array) && is_string($key_select)){
       foreach($array as $norow => $arr){
         if(is_array($arr) && !empty($arr)){
-          
+
           foreach($arr as $field => $val){
-            $name_key = "{$name_table}__{$key_select}";
-            
-            if(isset($arr[$name_key])){
+            if($name_table == '')$name_key = $key_select;
+            else $name_key = "{$name_table}__{$key_select}";
+
+            if(array_key_exists($name_key, $arr)){
               $arr_named_key = $arr[$name_key];
-              
-              if(is_array($val_select)){
+
+              if(is_array($val_select) && !empty($val_select)){
                 foreach($val_select as $k_val => $v_val){
-		  $name_val = "{$name_table}__{$v_val}";
-		  $n_val = $this->key($name_val, $arr);
-		  $return[$arr_named_key][$v_val] = $n_val;
+                  if($name_table == '')$name_val = $v_val;
+                  else $name_val = "{$name_table}__{$v_val}";
+
+                  $n_val = $this->key($name_val, $arr);
+                  $return[$arr_named_key][$v_val] = $n_val;
                 }
               }else{
-                if($val_select == ''){
+                if($val_select == '' || empty($val_select)){
                   foreach($arr as $ka => $va){
-                    $return[$arr_named_key][str_replace("{$name_table}__", '', $ka)] = $va;
+                    if($name_table == '')$return[$arr_named_key][$ka] = $va;
+                    else $return[$arr_named_key][str_replace("{$name_table}__", '', $ka)] = $va;
                   }
                 }else{
-                  $name_val = "{$name_table}__{$val_select}";
+                  if($name_table == '')$name_val = $val_select;
+                  else $name_val = "{$name_table}__{$val_select}";
+
                   $n_key = $this->key($name_key, $arr);
                   $n_val = $this->key($name_val, $arr);
                   $return[$n_key] = $n_val;
@@ -156,57 +169,61 @@ class Utilities{
         }
       }
     }
-    $option = [];
     if($return_option){
       if(!empty($return)){
+        $option = [];
         if($empty_option)$option[] = ['option' => '', 'value' => ''];
         foreach($return as $val => $opt){
-	  if($encrypt)$val = $this->encrypt($val);
-          else $val = $val;
+          if($encrypt)$val = $this->encrypt($val); else $val = $val;
           if($option_select != '' && $option_select == $val)$option[] = ['value' => $val, 'option' => $opt, 'selected' => 'selected'];
           else $option[] = ['option' => $opt, 'value' => $val];
         }
       }
-    }else $option = $return;
-
-    return $option;
+      return $option;
+    }else return $return;
   }
-	
+
   public function curl($args = []){
     $response = '';
     $url = $this->key('url', $args);
-    $data = $this->key('data', $args);
 
-    //BASIC AUTH
-    $credentials = $this->key('credentials', $args);
-    $timeout = $this->key('timeout', $args, 60);
     if($url != ''){
-  	$ch = curl_init($url);
-  	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-  	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
- 	curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
-  	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+      $data = $this->key('data', $args);
+      $credentials = $this->key('credentials', $args);
+      $timeout = $this->key('timeout', $args, 60);
+      $port = $this->key('port', $args);
+
+    	$ch = curl_init($url);
+    	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+    	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+   	  curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
+    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+      //PORT
+      if(is_numeric($port)){
+        curl_setopt($ch, CURLOPT_PORT, $port);
+      }
 
       //DATA
-  	if(!empty($data)){
-		$build_query = http_build_query($data, '', '&');
-		curl_setopt($ch, CURLOPT_POST, TRUE);
-  		curl_setopt($ch,CURLOPT_FOLLOWLOCATION, TRUE);
- 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
- 		curl_setopt($ch, CURLOPT_POSTFIELDS, $build_query);
-        	curl_setopt($ch, CURLOPT_HEADER, FALSE);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-length:'.strlen($build_query)]);
+    	if(!empty($data)){
+    		$build_query = http_build_query($data, '', '&');
+    		curl_setopt($ch, CURLOPT_POST, TRUE);
+      	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+     		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+     		curl_setopt($ch, CURLOPT_POSTFIELDS, $build_query);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-length:'.strlen($build_query)]);
       }
 
      	//TIMEOUT
-  	if($timeout != ''){
-  	  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-          curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
-  	}
+    	if(is_numeric($timeout)){
+    	  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+    	}
 
       //BASIC AUTH
-      if(isset($credentials['user']) && isset($credentials['pass'])){
-  	curl_setopt($ch, CURLOPT_USERPWD, "{$credentials['user']}:{$credentials['pass']}");
+      if(array_key_exists('user', $credentials) && array_key_exists('pass', $credentials)){
+  	    curl_setopt($ch, CURLOPT_USERPWD, "{$credentials['user']}:{$credentials['pass']}");
       }
 
       //RESPONSE
@@ -215,8 +232,8 @@ class Utilities{
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $response = "CURL ({$code}):".curl_error($ch);
       }
-     curl_close($ch);
-     }
-     return $response;
+      curl_close($ch);
+    }
+    return $response;
   }
 }

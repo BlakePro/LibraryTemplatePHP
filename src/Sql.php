@@ -141,7 +141,7 @@ class Sql extends Utilities{
         $params = [];
 
         //-------- SET --------
-        if(isset($arr_set) && !empty($arr_set) && is_array($arr_set)){
+        if(!empty($arr_set) && is_array($arr_set)){
           foreach($arr_set as $field_name => $value){
             if(isset($arr_not_null[$name_table][$field_name]) && $value == ''){
               $str_empty .= "<li>{$arr_not_null[$name_table][$field_name]}</li>";
@@ -155,7 +155,7 @@ class Sql extends Utilities{
         }
 
         //-------- WHERE --------
-        if(isset($where_criteria[$name_table]) && !empty($where_criteria[$name_table]) && is_array($where_criteria[$name_table])){
+        if(array_key_exists($name_table, $where_criteria) && !empty($where_criteria[$name_table]) && is_array($where_criteria[$name_table])){
 
           foreach($where_criteria[$name_table] as $field_name => $array_criteria_data){
             //WHERE UPDATE VERSION
@@ -338,7 +338,7 @@ class Sql extends Utilities{
           if(!empty($arr_sql_field_key)){
             foreach($arr_sql_field_key as $namettable => $arr_ttable){
               foreach($arr_ttable as $kfield => $nfield){
-                if(isset($arr_sql_desc_key[$nfield])){
+                if(array_key_exists($nfield, $arr_sql_desc_key)){
                   $arr_key_pairs[$nfield][$namettable] = "{$namettable}.{$nfield}";
                   $arr_key_pairs_table[$namettable][$nfield] = $nfield;
                 }
@@ -368,7 +368,7 @@ class Sql extends Utilities{
        	$params = [];
 
         /*-------- SET --------*/
-        if(isset($insert) && !empty($insert) && is_array($insert)){
+        if(!empty($insert) && is_array($insert)){
           foreach($insert as $field_name => $value){
             if(isset($arr_not_null[$name_table][$field_name]) && $value == ''){
   						$str_empty .= "<li>{$arr_not_null[$name_table][$field_name]}</li>";
@@ -389,7 +389,7 @@ class Sql extends Utilities{
         if($str_empty != '')$return[$name_table]['message'] = "Fill:<ul>{$str_empty}</ul>";
         else{
           if(!empty($params) && $set_table != '')$return[$name_table] = $this->sql($sql, $params, FALSE, TRUE);
-          else $return[$name_table]['message'] = 'Empty params';
+          else $return[$name_table]['message'] = 'Check empty params';
         }
       }
     }
@@ -410,7 +410,7 @@ class Sql extends Utilities{
         $params = [];
 
         //-------- WHERE --------
-        if(isset($where_criteria[$name_table]) && !empty($where_criteria[$name_table]) && is_array($where_criteria[$name_table])){
+        if(array_key_exists($name_table, $where_criteria) && !empty($where_criteria[$name_table]) && is_array($where_criteria[$name_table])){
 
           foreach($where_criteria[$name_table] as $field_name => $array_criteria_data){
             //WHERE UPDATE VERSION

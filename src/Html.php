@@ -62,8 +62,8 @@ class Html extends Sql{
   }
 
   //FUNCTION TO GET ICON (FONTAWESOME PREFIX)
-  public function icon($name, $prefix = 'fas fa-'){
-    return "<i class='{$prefix}{$name}'></i>";
+  public function icon($name, $prefix = 'fas fa-', $class = ''){
+    return "<i class='{$prefix}{$name} {$class}'></i>";
   }
 
   //FUNCTION TO GET HTML BUTTON WITH ICON
@@ -87,7 +87,7 @@ class Html extends Sql{
   public function input($attr = [], $label = ''){
     $html_attr = $this->attr($attr);
     $input = "<input{$html_attr}/>";
-    
+
     if($label == '')return $input;
     else{
       return "<div class='form-group form-group-default'>
@@ -275,7 +275,7 @@ class Html extends Sql{
     else $html = $array;
     return $this->tag('pre', $html);
   }
-  
+
   //FUNCTION TO DIRECT PRINT ARRAY OR STRING
   public function print_pre($array){
     print $this->pre($array);
@@ -299,72 +299,72 @@ class Html extends Sql{
   public function template($url_json, $attr = []){
 
     //GET JSON LOCAL (INCLUDE ALL PATH) OR REMOTE FILE (URL)
+    $file_json = '';
     if(filter_var($url_json, FILTER_VALIDATE_URL))$file_json = $this->curl(['url' => $url_json]);
-    else $file_json = file_get_contents($url_json);
+    else if($this->is_file($url_json))$file_json = file_get_contents($url_json);
 
     //JSON FILE CONFIG
     $configuration = json_decode($file_json, TRUE);
-    $lang = $this->key('lang', $configuration);
-    $title = $this->key('title', $configuration);
-    $logo = $this->key('logo', $configuration);
-    $configuration_css = $this->key('css', $configuration);
-    $configuration_js = $this->key('js', $configuration);
+    if(is_array($configuration) && !empty($configuration)){
+      $lang = $this->key('lang', $configuration);
+      $title = $this->key('title', $configuration);
+      $logo = $this->key('logo', $configuration);
+      $end_body = $this->key('end_body', $configuration);
+      $configuration_css = $this->key('css', $configuration);
+      $configuration_js = $this->key('js', $configuration);
 
-    //REMOVE CONFIGURATION
-    $array_no_params = ['lang', 'title', 'logo', 'css', 'js'];
-    if(!empty($array_no_params)){
-      foreach($array_no_params as $k => $param){
-        if(isset($configuration[$param]))unset($configuration[$param]);
-      }
-    }
-
-    //INIT HTML TEMPLATE
-    $template = "<!DOCTYPE html>
-            <html lang='{$lang}'>
-              <head>";
-
-    //TITLE TEMPLATE
-    $template .= $this->tag('title', $title);
-
-    //META CONFIG
-    if(!empty($configuration)){
-      foreach($configuration as $tag => $array_tag){
-        foreach($array_tag as $no => $attr_config){
-          $template .= $this->tag($tag, '', $attr_config, FALSE);
+      //REMOVE CONFIGURATION
+      $array_no_params = ['lang', 'title', 'logo', 'css', 'js'];
+      if(!empty($array_no_params)){
+        foreach($array_no_params as $k => $param){
+          if(array_key_exists($param, $configuration))unset($configuration[$param]);
         }
       }
-    }
 
-    //CSS FILES
-    if(!empty($configuration_css)){
-      foreach($configuration_css as $no => $data_css){
-        if(is_array($data_css))$template .= $this->tag('link', '', $data_css, FALSE);
-        else $template .= $this->tag('link', '', ['href' => $data_css, 'rel' => 'stylesheet', 'type' => 'text/css'], FALSE);
+      //INIT HTML TEMPLATE
+      $template = "<!DOCTYPE html><html lang='{$lang}'><head>";
+
+      //TITLE TEMPLATE
+      $template .= $this->tag('title', $title);
+
+      //META CONFIG
+      if(!empty($configuration)){
+        foreach($configuration as $tag => $array_tag){
+          foreach($array_tag as $no => $attr_config)$template .= $this->tag($tag, '', $attr_config, FALSE);
+        }
       }
-    }
-    
-    //BODY ARGS
-    $body = $this->key('html', $attr);
-    if(array_key_exists('html', $attr))unset($attr['html']);
 
-    $body_attr = $this->attr($attr);
-    $template .= "</head><body{$body_attr}>";
-
-    //BODY HTML REPLACE LOGO AND TEMPLATE NAME TAG
-    $template .= str_replace(['{template_logo}', '{template_name}'], [$logo, $title], $body);
-
-    //JS FILES
-    if(!empty($configuration_js)){
-      foreach($configuration_js as $no => $data_js){
-        if(is_array($data_js))$template .= $this->script('', $data_js);
-        else $template .= $this->script('', ['src' => $data_js]);
+      //CSS FILES
+      if(!empty($configuration_css)){
+        foreach($configuration_css as $no => $data_css){
+          if(is_array($data_css))$template .= $this->tag('link', '', $data_css, FALSE);
+          else $template .= $this->tag('link', '', ['href' => $data_css, 'rel' => 'stylesheet', 'type' => 'text/css'], FALSE);
+        }
       }
+
+      //BODY ARGS
+      $body = $this->key('html', $attr);
+      if(array_key_exists('html', $attr))unset($attr['html']);
+
+      $body_attr = $this->attr($attr);
+      $template .= "</head><body{$body_attr}>";
+
+      //BODY HTML REPLACE LOGO AND TEMPLATE NAME TAG
+      $template .= str_replace(['{template_logo}', '{template_name}'], [$logo, $title], $body);
+
+      //JS FILES
+      if(!empty($configuration_js)){
+        foreach($configuration_js as $no => $data_js){
+          if(is_array($data_js))$template .= $this->script('', $data_js);
+          else $template .= $this->script('', ['src' => $data_js]);
+        }
+      }
+
+      //HTML
+      $template .= "{$end_body}</body></html>";
+
+      //RETURN HTML
+      return $this->html($template);
     }
-
-    //HTML
-    $template .= '</body></html>';
-
-    //RETURN HTML
-    return $this->html($template);
   }
 }
