@@ -2,9 +2,14 @@
 
 A simple class to create HTML via PHP and template via JSON file
 
-# Install (via Composer)
+# Install (via global Composer)
 ```
-php composer.phar require blakepro/template:dev-master
+composer require blakepro/template
+```
+
+# Install (via Composer.phar)
+```
+php composer.phar require blakepro/template
 ```
 
 # Install Composer and Class (via Python)
