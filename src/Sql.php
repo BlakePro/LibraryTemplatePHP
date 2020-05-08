@@ -119,7 +119,7 @@ class Sql extends Utilities{
         $message = $exception->getMessage();
       }
     }
-    return ['state' => $state,  'message' => $message, 'fetch' => $data_fetch, 'sql' => $this->query_print($sql_send, $params)];
+    return ['state' => $state, 'message' => $message, 'fetch' => $data_fetch, 'sql' => $this->query_print($sql_send, $params)];
   }
 
   private function update($data){
@@ -146,7 +146,7 @@ class Sql extends Utilities{
             if(isset($arr_not_null[$name_table][$field_name]) && $value == ''){
               $str_empty .= "<li>{$arr_not_null[$name_table][$field_name]}</li>";
             }
-            if($value == 0)$value = '0';
+            if($value == FALSE)$value = '0';
             if($value != ''){
               $set_table .= " $field_name = ?,";
               $params[] = ($value); //utf8_encode

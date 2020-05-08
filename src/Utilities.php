@@ -3,11 +3,11 @@ namespace blakepro\Template;
 
 class Utilities{
 
-   public function __construct($attr = []){
+  public function __construct($attr = []){
     $this->encryption_key = $this->key('encryption_key', $attr);
   }
 
-   public function encrypt($string){
+  public function encrypt($string){
     return openssl_encrypt($string, "AES-128-ECB", $this->encryption_key);
   }
 
@@ -100,6 +100,11 @@ class Utilities{
 
   function is_email($email) {
     return filter_var($email, FILTER_VALIDATE_EMAIL) ? TRUE : FALSE;
+  }
+
+  function is_content($array){
+    if(is_array($array) && !empty($array))return TRUE;
+    else return FALSE;
   }
 
   public function file_check($file){
