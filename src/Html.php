@@ -260,6 +260,27 @@ class Html extends Sql{
     return $this->tag('table', $html, $attr_table);
   }
 
+  //FUNCTION TO MINIFY TD ARRAY IN TABLE FUNCTION
+  public function td_width($value, $width, $class = ''){
+    if($value != '' && is_numeric($width)){
+      return ['value' => $value, 'attr' => ['style' => "width:{$width}%", 'class' => $class]];
+    }
+  }
+
+  //FUNCTION TO MINIFY DATA IN TABLE FUNCTION
+  public function table_min($args){
+    $attr = $this->key('attr', $args);
+    $th = $this->key('th', $args);
+    $td = $this->key('td', $args);
+    $class = $this->key('class', $args);
+    if($class == '')$class = 'table table-hover';
+    if(!$this->is_content($attr))$attr = ['class' => $class];
+    if(!$this->is_content($td))$td = [];
+    if(!$this->is_content($th))$th = [];
+    $table = ['attr' => $attr, 'th' => [$th], 'td' => $td];
+    return $this->table($table);
+  }
+
   //FUNCTION TO GET HTML ALERT
   public function alert($title, $text, $type){
     $title = $this->p($this->b($title));
