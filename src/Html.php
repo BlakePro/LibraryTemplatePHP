@@ -170,12 +170,12 @@ class Html extends Sql{
     $select =  $this->tag('select', $html, $attr);
 
     if(is_array($attr_label)){
-      $label = $this->label($this->key('label', $attr_label));
-      if(array_key_exists('label', $attr_label))unset($attr_label['label']);
+      if(array_key_exists('label', $attr_label)){
+        $label = $this->label($this->key('label', $attr_label));
+        unset($attr_label['label']);
+      }else $label = '';
       return $this->div("{$label}{$select}", $attr_label);
-    }else{
-      return $select;
-    }
+    }else return $select;
   }
 
   //FUNCTION TO GET LABEL
