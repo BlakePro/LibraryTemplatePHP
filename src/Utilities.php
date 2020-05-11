@@ -180,8 +180,8 @@ class Utilities{
         if($empty_option)$option[] = ['option' => '', 'value' => ''];
         foreach($return as $val => $opt){
           if($encrypt)$val = $this->encrypt($val); else $val = $val;
-          if($option_select != '' && $option_select == $val)$option[] = ['value' => $val, 'option' => $opt, 'selected' => 'selected'];
-          else $option[] = ['option' => $opt, 'value' => $val];
+          if($option_select != '' && $option_select == $val)$option[] = ['option' => "{$opt}", 'value' => "{$val}", 'selected' => 'selected'];
+          else $option[] = ['option' => "{$opt}", 'value' => "{$val}"];
         }
       }
       return $option;

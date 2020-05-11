@@ -167,7 +167,7 @@ class Html extends Sql{
     $attr_label = $this->key('attr_label', $attr);
     if(array_key_exists('attr_label', $attr))unset($attr['attr_label']);
 
-    $select =  $this->tag('select', $html, $attr);
+    $select = $this->tag('select', $html, $attr);
 
     if(is_array($attr_label)){
       if(array_key_exists('label', $attr_label)){
