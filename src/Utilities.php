@@ -175,8 +175,8 @@ class Utilities{
       }
     }
     if($return_option){
+      $option = [];
       if($this->is_content($return)){
-        $option = [];
         if($empty_option)$option[] = ['option' => '', 'value' => ''];
         foreach($return as $val => $opt){
           if($encrypt)$val = $this->encrypt($val); else $val = $val;
