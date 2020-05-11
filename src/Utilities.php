@@ -175,7 +175,7 @@ class Utilities{
       }
     }
     if($return_option){
-      if(!empty($return)){
+      if($this->is_content($return)){
         $option = [];
         if($empty_option)$option[] = ['option' => '', 'value' => ''];
         foreach($return as $val => $opt){
@@ -210,7 +210,7 @@ class Utilities{
       }
 
       //DATA
-    	if(!empty($data)){
+      if($this->is_content($data)){
     		$build_query = http_build_query($data, '', '&');
     		curl_setopt($ch, CURLOPT_POST, TRUE);
       	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
@@ -227,8 +227,10 @@ class Utilities{
     	}
 
       //BASIC AUTH
-      if(array_key_exists('user', $credentials) && array_key_exists('pass', $credentials)){
-  	    curl_setopt($ch, CURLOPT_USERPWD, "{$credentials['user']}:{$credentials['pass']}");
+      if($this->is_content($credentials)){
+        if(array_key_exists('user', $credentials) && array_key_exists('pass', $credentials)){
+    	    curl_setopt($ch, CURLOPT_USERPWD, "{$credentials['user']}:{$credentials['pass']}");
+        }
       }
 
       //RESPONSE
