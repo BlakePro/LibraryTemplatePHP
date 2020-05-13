@@ -1,6 +1,7 @@
 <?php
 namespace blakepro\Template;
 
+//1.2
 class Html extends Sql{
 
   //CONSTRUCT
@@ -185,8 +186,8 @@ class Html extends Sql{
       foreach($array as $key => $arr){
         $option = $this->key('option', $arr);
         $value = $this->key('value', $arr);
-        $options[$key] = ['option' => $option, 'value' => $value];
-        if($value == $selected)$options[$key]['selected'] = 'selected';
+        $options["{$key}"] = ['option' => "{$option}", 'value' => "{$value}"];
+        if($value == $selected)$options["{$key}"]['selected'] = 'selected';
       }
     }
     return $options;
