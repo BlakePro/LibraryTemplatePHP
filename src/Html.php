@@ -178,6 +178,20 @@ class Html extends Sql{
     }else return $select;
   }
 
+  //SELECETED OPTION FROM ARRAY
+  public function selected($selected, $array){
+    $options = [];
+    if($this->is_content($array)){
+      foreach($array as $key => $arr){
+        $option = $this->key('option', $arr);
+        $value = $this->key('value', $arr);
+        $options[$key] = ['option' => $option, 'value' => $value];
+        if($value == $selected)$options[$key]['selected'] = 'selected';
+      }
+    }
+    return $options;
+  }
+
   //FUNCTION TO GET LABEL
   public function label($html, $attr = []){
     return $this->tag('label', $html, $attr);
