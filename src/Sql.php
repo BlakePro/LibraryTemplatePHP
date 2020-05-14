@@ -146,10 +146,11 @@ class Sql extends Utilities{
             if(isset($arr_not_null[$name_table][$field_name]) && $value == ''){
               $str_empty .= "<li>{$arr_not_null[$name_table][$field_name]}</li>";
             }
-            //if($value === FALSE)$value = '0';
+            if($value == '')$val_post = NULL;
+            if($value === FALSE)$value = '0';
             if(is_string($value)){
               $set_table .= " $field_name = ?,";
-              $params[] = "{$value}";
+              $params[] = $value;
             }
           }
         }
