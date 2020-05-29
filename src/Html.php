@@ -34,7 +34,7 @@ class Html extends Sql{
   //FUNCTION TO GET ROW / GRID BOOSTRAP
   public function row($array){
     $data = '';
-    $delete = ['xs', 'sm', 'md', 'lg', 'xl', 'col', 'html', 'class'];
+    $delete = ['xs', 'sm', 'md', 'lg', 'xl', 'col', 'html', 'id', 'class'];
   	if(!empty($array)){
   		foreach($array as $k => $row){
         $style = '';
@@ -45,11 +45,13 @@ class Html extends Sql{
         $col_md = $this->key('md', $row, $col);
         $col_lg = $this->key('lg', $row, $col);
         $col_xl = $this->key('xl', $row, $col);
-        $add_class = $this->key('class', $row, $col);
+        $add_class = $this->key('class', $row);
+        $add_id = $this->key('id', $row);
         foreach($row as $key => $val){
           if(in_array($key, $delete))unset($row[$key]);
         }
-        if(is_numeric($add_class))$add_class = '';
+        if(!is_string($add_class))$add_class = '';
+        if($add_id != '')$row['id'] = $add_id;
         $row['class'] = trim("col-sm-{$col_sm} col-md-{$col_md} col-lg-{$col_lg} col-xl-{$col_xl} col-{$col} {$add_class}");
         $data .= $this->div($html, $row);
   		}
@@ -128,6 +130,10 @@ class Html extends Sql{
     return $this->tag('script', $script, $attr);
   }
 
+  public function style($style, $attr = []){
+    return $this->tag('style', $style, $attr);
+  }
+
   //FUNCTION TO GET BR
   public function br($no = ''){
     $html = '';
@@ -199,7 +205,7 @@ class Html extends Sql{
   }
 
   //FUNCTION TO GET HTML TABLE
-  public function table($table){
+  public function table($table, $attr = []){
     $html = '';
     $attr_table = $this->key('attr', $table);
 
@@ -272,7 +278,7 @@ class Html extends Sql{
         }
       }
     }
-    return $this->tag('table', $html, $attr_table);
+    return $this->div($this->tag('table', $html, $attr_table), $attr);
   }
 
   //FUNCTION TO MINIFY TD ARRAY IN TABLE FUNCTION
@@ -283,17 +289,17 @@ class Html extends Sql{
   }
 
   //FUNCTION TO MINIFY DATA IN TABLE FUNCTION
-  public function table_min($args){
-    $attr = $this->key('attr', $args);
+  public function table_min($args, $attr = []){
+    $attr_table = $this->key('attr', $args);
     $th = $this->key('th', $args);
     $td = $this->key('td', $args);
     $class = $this->key('class', $args);
     if($class == '')$class = 'table table-hover';
-    if(!$this->is_content($attr))$attr = ['class' => $class];
+    if(!$this->is_content($attr_table))$attr_table = ['class' => $class];
     if(!$this->is_content($td))$td = [];
     if(!$this->is_content($th))$th = [];
-    $table = ['attr' => $attr, 'th' => [$th], 'td' => $td];
-    return $this->table($table);
+    $table = ['attr' => $attr_table, 'th' => [$th], 'td' => $td];
+    return $this->table($table, $attr);
   }
 
   //FUNCTION TO GET HTML ALERT
@@ -314,6 +320,11 @@ class Html extends Sql{
 
   //FUNCTION TO DIRECT PRINT ARRAY OR STRING
   public function print_pre($array){
+    print $this->pre($array);
+  }
+
+  //SHORTVUT PRINT_PRE
+  public function ppre($array){
     print $this->pre($array);
   }
 

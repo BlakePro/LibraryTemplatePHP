@@ -1,6 +1,6 @@
 <?php
   error_reporting(E_ALL);
-  ini_set("display_errors","On");
+  ini_set('display_errors', 'On');
   include 'vendor/autoload.php';
 
   //CONFIG TEMPLATE
@@ -18,4 +18,4 @@
   //DEFINE CLASS TEMPLATE
   $html = new blakepro\Template\Html();
   $pdo = new blakepro\Template\Sql(['host' => DB_HOST, 'name' => '', 'user' => DB_USER, 'password' => DB_PASSWORD]);
-  $utilities = new blakepro\Template\Utilities(['encryption_key' => ENCRYPTION_KEY]);
+  $util = new blakepro\Template\Utilities(['encryption_key' => ENCRYPTION_KEY]);

@@ -69,7 +69,7 @@ class Sql extends Utilities{
         $string = str_replace("'",'',$string);
         $array = explode($delimiter, $string);
       }
-      if(!empty($array)){
+      if($this->is_content($array)){
         foreach($array as $k => $v){
           if(is_array($v)){
             if($k == '*')$k = '';
@@ -126,8 +126,7 @@ class Sql extends Utilities{
     $return = [];
     $set = $this->key('set', $data);
     $array_criteria_where = $this->criteria();
-
-    if(!empty($set) && is_array($set)){
+    if($this->is_content($set)){
       $where_criteria = $this->key('where', $data);
 
       $table = [];
@@ -141,16 +140,15 @@ class Sql extends Utilities{
         $params = [];
 
         //-------- SET --------
-        if(!empty($arr_set) && is_array($arr_set)){
+        if($this->is_content($arr_set)){
           foreach($arr_set as $field_name => $value){
             if(isset($arr_not_null[$name_table][$field_name]) && $value == ''){
               $str_empty .= "<li>{$arr_not_null[$name_table][$field_name]}</li>";
             }
-            if($value == '')$val_post = NULL;
-            if($value === FALSE)$value = '0';
+            //if($value === FALSE)$value = '0';
             if(is_string($value)){
               $set_table .= " $field_name = ?,";
-              $params[] = $value;
+              $params[] = "{$value}";
             }
           }
         }
@@ -179,7 +177,7 @@ class Sql extends Utilities{
 
         if($str_empty != '')$return[$name_table]['message'] = "Fill: <ul>{$str_empty}</ul>";
         else{
-          if(!empty($params) && $set_table != '' && $where_table != ''){
+          if($this->is_content($params) && $set_table != '' && $where_table != ''){
             $return[$name_table] = $this->sql($sql, $params, FALSE);
           }else{
             $return[$name_table]['state'] = FALSE;
@@ -197,13 +195,14 @@ class Sql extends Utilities{
     $table = $this->key('table', $data);
   	$options = $this->key('options', $data);
     $array_criteria_where = $this->criteria();
-    if(!empty($table) && is_array($table)){
+    if($this->is_content($table)){
 
       $arr_sql_field_key = [];
       $debug = $this->key('debug', $data, FALSE);
       $where_criteria = $this->key('where', $data);
       $limit = $this->key('limit', $data);
       $on = $this->key('on', $data);
+      $at = $this->key('at', $data);
       $group = $this->key('group', $data);
       $order = $this->key('order', $data);
 
@@ -215,14 +214,18 @@ class Sql extends Utilities{
       $arr_data_rows = $all_params = [];
       $sql_join = $rows = $keys = $val_join = $group_by = $order_by = '';
 
-  		//KEYS
-  		if(is_array($on) && !empty($on)){
+  		//KEYS (ON)
+  		if($this->is_content($on)){
+
   			foreach($on as $key_name => $arr_on){
 					$str_key = '';
-					foreach($arr_on as $notable => $key_table){
+					foreach($arr_on as $possible_table => $key_table){
 						if(in_array($key_table, $table) && $key_name != '' && $key_table != ''){
 							$str_key .= "{$key_table}.{$key_name} = ";
-						}
+            //COMPOUND NAME
+						}elseif(in_array($possible_table, $table) && $possible_table != '' && $possible_table != ''  && $key_table != ''){
+              $str_key .= "{$possible_table}.{$key_table} = ";
+            }
 					}
 					if($str_key != ''){
 						$str_key = $this->remove_string($str_key, 2);
@@ -230,13 +233,15 @@ class Sql extends Utilities{
 					}
   			}
         //KEY
-        $keys = $this->remove_string($keys, 4);
-        if(!$this->in_string('=', $keys))$keys = '';
-        $keys = "ON ($keys)";
-  		}
+        if($keys != ''){
+          $keys = $this->remove_string($keys, 4);
+          if(!$this->in_string('=', $keys))$keys = '';
+          $keys = "ON ($keys)";
+        }
+    	}
 
   		//GROUP
-  		if(is_array($group) && !empty($group)){
+  		if($this->is_content($group)){
   			foreach($group as $no_on => $arr_on){
   				foreach($arr_on as $key_name => $arrtable){
   					$str_key = '';
@@ -256,7 +261,7 @@ class Sql extends Utilities{
   		}
 
       //ORDER
-      if(is_array($order) && !empty($order)){
+      if($this->is_content($order)){
 				foreach($order as $key_table => $arrtable){
 					$str_order = '';
 					foreach($arrtable as $key_name => $order_type){
@@ -312,13 +317,13 @@ class Sql extends Utilities{
 
   public function description($table = [], $db = ''){
     $arr_not_null = $arr_rows_table = $arr_rows = $arr_sql_desc_key = $arr_key_pairs = $arr_sql_field_key = $arr_key_pairs_table = [];
-    if(!empty($table)){
+    if($this->is_content($table)){
       foreach($table as $no_table => $name_table){
         $name_table_col = $name_table;
 
         $sql = "SHOW FULL COLUMNS FROM {$db}{$name_table_col}";
         $arr_sql_desc = $this->sql($sql);
-        if(!empty($arr_sql_desc)){
+        if($this->is_content($arr_sql_desc)){
           $name_table = $this->get_table_name($name_table, $db);
           $fetch = $this->key('fetch', $arr_sql_desc);
           foreach($fetch as $kdesc => $vdesc){
@@ -336,7 +341,7 @@ class Sql extends Utilities{
             $arr_rows_table[$name_table][$field_desc] = $field_desc;
           }
 
-          if(!empty($arr_sql_field_key)){
+          if($this->is_content($arr_sql_field_key)){
             foreach($arr_sql_field_key as $namettable => $arr_ttable){
               foreach($arr_ttable as $kfield => $nfield){
                 if(array_key_exists($nfield, $arr_sql_desc_key)){
@@ -356,7 +361,7 @@ class Sql extends Utilities{
   private function insert($data){
     $return = [];
     $arr_insert = $this->key('values', $data);
-    if(!empty($arr_insert) && is_array($arr_insert)){
+    if($this->is_content($arr_insert)){
 
       $table = [];
       foreach($arr_insert as $name_table => $insert)$table[] = $name_table;
@@ -369,7 +374,7 @@ class Sql extends Utilities{
        	$params = [];
 
         /*-------- SET --------*/
-        if(!empty($insert) && is_array($insert)){
+        if($this->is_content($insert)){
           foreach($insert as $field_name => $value){
             if(isset($arr_not_null[$name_table][$field_name]) && $value == ''){
   						$str_empty .= "<li>{$arr_not_null[$name_table][$field_name]}</li>";
@@ -389,7 +394,7 @@ class Sql extends Utilities{
 
         if($str_empty != '')$return[$name_table]['message'] = "Fill:<ul>{$str_empty}</ul>";
         else{
-          if(!empty($params) && $set_table != '')$return[$name_table] = $this->sql($sql, $params, FALSE, TRUE);
+          if($this->is_content($params) && $set_table != '')$return[$name_table] = $this->sql($sql, $params, FALSE, TRUE);
           else $return[$name_table]['message'] = 'Check empty params';
         }
       }
@@ -403,7 +408,7 @@ class Sql extends Utilities{
     $table = $this->key('table', $data);
     $where_criteria = $this->key('where', $data);
     $array_criteria_where = $this->criteria();
-    if(!empty($table)){
+    if($this->is_content($table)){
 
       foreach($table as $no_table => $name_table){
         $name_table = $this->get_table_name($name_table, $db);
@@ -427,7 +432,7 @@ class Sql extends Utilities{
         $sql = "DELETE FROM {$db}{$name_table} $where_table";
         $return['sql'][$name_table] = $this->query_print($sql, $params);
 
-        if(!empty($params) && $where_table != ''){
+        if($this->is_content($params) && $where_table != ''){
           $arr_data_rows = $this->sql($sql, $params, FALSE);
           $return[$name_table] = $arr_data_rows;
         }else{

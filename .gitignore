@@ -1,0 +1,6 @@
+.now
+.DS_Store
+composer.lock
+/vendor
+debug.php
+*.backup
