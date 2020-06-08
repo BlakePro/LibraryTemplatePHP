@@ -198,6 +198,7 @@ class Sql extends Utilities{
     if($this->is_content($table)){
 
       $arr_sql_field_key = [];
+      $select = $this->key('select', $data);
       $debug = $this->key('debug', $data, FALSE);
       $where_criteria = $this->key('where', $data);
       $limit = $this->key('limit', $data);
@@ -206,7 +207,17 @@ class Sql extends Utilities{
       $group = $this->key('group', $data);
       $order = $this->key('order', $data);
 
-      if(is_numeric($limit) && $limit > 0)$limit = "LIMIT $limit"; else $limit = '';
+      //ADD NEW WAY TO PASS LIMIT OFFSET
+      if(is_numeric($limit) && $limit > 0)$limit = "LIMIT $limit";
+      else{
+        if(is_array($limit)){
+          $no_record = $this->key(0, $limit);
+          $no_limit = $this->key(1, $limit);
+          if(is_numeric($no_record) && is_numeric($no_limit))$limit = "LIMIT {$no_record},{$no_limit}";
+          else $limit = '';
+        }else $limit = '';
+      }
+
       $arr_sql_desc = $this->description($table, $db);
 
       $arr_sql_fields = $this->key('fields', $arr_sql_desc);
@@ -283,11 +294,22 @@ class Sql extends Utilities{
       	$val_join = mb_strtoupper(trim($this->key($no_table, $options)));
       	if(!in_array($val_join, array('LEFT', 'RIGHT', 'INNER')))$val_join = '';
 
-        if(is_array($arr_rows) && !empty($arr_rows)){
+        //NEW WAY TO PASS ROWS AS SELECT ARGS
+        $row_select = [];
+        if(array_key_exists($name_table, $select) && $this->is_content($select[$name_table])){
+          $row_select = $this->key($name_table, $select);
+          foreach($row_select as $row_name => $row_rename){
+            $rows .= "{$row_name} AS {$name_table}__{$row_rename}, ";
+          }
+        }
+
+        if($this->is_content($arr_rows)){
           foreach($arr_rows as $nrtab => $field_name){
 
     	      //ROWS
-    	      $rows .= "{$name_table}.{$field_name} AS {$name_table}__{$field_name}, ";
+            if(!$this->is_content($row_select)){
+    	        $rows .= "{$name_table}.{$field_name} AS {$name_table}__{$field_name}, ";
+            }
 
             //WHERE UPDATE VERSION
             $arr_table_where = $this->get_table_where($array_criteria_where, $where_criteria, $name_table, $field_name);
