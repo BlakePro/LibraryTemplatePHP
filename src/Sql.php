@@ -198,7 +198,7 @@ class Sql extends Utilities{
     if($this->is_content($table)){
 
       $arr_sql_field_key = [];
-      $select = $this->key('select', $data);
+      $select = $this->key('select', $data, []);
       $debug = $this->key('debug', $data, FALSE);
       $where_criteria = $this->key('where', $data);
       $limit = $this->key('limit', $data);
@@ -295,9 +295,8 @@ class Sql extends Utilities{
       	if(!in_array($val_join, array('LEFT', 'RIGHT', 'INNER')))$val_join = '';
 
         //NEW WAY TO PASS ROWS AS SELECT ARGS
-        $row_select = [];
-        if(array_key_exists($name_table, $select) && $this->is_content($select[$name_table])){
-          $row_select = $this->key($name_table, $select);
+        $row_select = $this->key($name_table, $select);
+        if($this->is_content($row_select)){
           foreach($row_select as $row_name => $row_rename){
             $rows .= "{$row_name} AS {$name_table}__{$row_rename}, ";
           }
@@ -307,7 +306,7 @@ class Sql extends Utilities{
           foreach($arr_rows as $nrtab => $field_name){
 
     	      //ROWS
-            if(!$this->is_content($row_select)){
+            if(!$this->is_content($select)){
     	        $rows .= "{$name_table}.{$field_name} AS {$name_table}__{$field_name}, ";
             }
 
