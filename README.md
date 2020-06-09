@@ -4,7 +4,7 @@ A simple class to create HTML via PHP and template via JSON file
 
 # Install (via global Composer)
 ```
-composer require blakepro/template
+composer require blakepro/template --no-cache
 ```
 
 # Install (via Composer.phar)
@@ -19,7 +19,7 @@ curl -o installer.py https://raw.githubusercontent.com/BlakePro/Template/master/
 
 # Update (via Composer)
 ```
-php composer.phar update blakepro/template
+php composer.phar update blakepro/template --no-cache
 ```
 Not resolved packages use
 ```

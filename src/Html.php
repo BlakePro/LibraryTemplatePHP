@@ -58,11 +58,11 @@ class Html extends Sql{
         //ADD SHORT WAY TO CALL COL EXAMPLE [12, 12, 12, 6, 4, 3];
         if($this->is_content($cols)){
           $col = $this->key(0, $cols, 12);
-          $col_xs = $this->key(1, $cols, $col);
-          $col_sm = $this->key(2, $cols, $col);
-          $col_md = $this->key(3, $cols, $col);
-          $col_lg = $this->key(4, $cols, $col);
-          $col_xl = $this->key(5, $cols, $col);
+          $col_xs = $this->key(1, $cols, 12);
+          $col_sm = $this->key(2, $cols, 12);
+          $col_md = $this->key(3, $cols, 12);
+          $col_lg = $this->key(4, $cols, 12);
+          $col_xl = $this->key(5, $cols, 12);
         }
 
         $row['class'] = trim("col-{$col} col-xs-{$col_xs} col-sm-{$col_sm} col-md-{$col_md} col-lg-{$col_lg} col-xl-{$col_xl} {$add_class}");
