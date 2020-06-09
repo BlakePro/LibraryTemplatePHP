@@ -1,5 +1,4 @@
-<?php
-namespace blakepro\Template;
+<?php namespace blakepro\Template;
 
 //1.2
 class Html extends Sql{
@@ -13,7 +12,7 @@ class Html extends Sql{
     $html = '';
     if(is_array($attr) && !empty($attr)){
       foreach($attr as $k => $v){
-        if(is_string($k) && $k != ''){
+        if(!is_array($k) && $k != '' && !is_array($v)){
           if($v == '')$html .= " {$k}";
           else $html .= " {$k}='{$v}'";
         }
@@ -34,8 +33,8 @@ class Html extends Sql{
   //FUNCTION TO GET ROW / GRID BOOSTRAP
   public function row($array){
     $data = '';
-    $delete = ['xs', 'sm', 'md', 'lg', 'xl', 'col', 'html', 'id', 'class'];
-  	if(!empty($array)){
+    $delete = ['xs', 'sm', 'md', 'lg', 'xl', 'col', 'cols', 'html', 'id', 'class'];
+  	if($this->is_content($array)){
   		foreach($array as $k => $row){
         $style = '';
         $html = $this->key('html', $row);
@@ -45,14 +44,28 @@ class Html extends Sql{
         $col_md = $this->key('md', $row, $col);
         $col_lg = $this->key('lg', $row, $col);
         $col_xl = $this->key('xl', $row, $col);
+        $cols = $this->key('cols', $row, $col);
         $add_class = $this->key('class', $row);
         $add_id = $this->key('id', $row);
+
         foreach($row as $key => $val){
           if(in_array($key, $delete))unset($row[$key]);
         }
+
         if(!is_string($add_class))$add_class = '';
         if($add_id != '')$row['id'] = $add_id;
-        $row['class'] = trim("col-sm-{$col_sm} col-md-{$col_md} col-lg-{$col_lg} col-xl-{$col_xl} col-{$col} {$add_class}");
+
+        //ADD SHORT WAY TO CALL COL EXAMPLE [12, 12, 12, 6, 4, 3];
+        if($this->is_content($cols)){
+          $col = $this->key(0, $cols, 12);
+          $col_xs = $this->key(1, $cols, $col);
+          $col_sm = $this->key(2, $cols, $col);
+          $col_md = $this->key(3, $cols, $col);
+          $col_lg = $this->key(4, $cols, $col);
+          $col_xl = $this->key(5, $cols, $col);
+        }
+
+        $row['class'] = trim("col-{$col} col-xs-{$col_xs} col-sm-{$col_sm} col-md-{$col_md} col-lg-{$col_lg} col-xl-{$col_xl} {$add_class}");
         $data .= $this->div($html, $row);
   		}
   	}
@@ -92,12 +105,7 @@ class Html extends Sql{
     $input = "<input{$html_attr}/>";
 
     if($label == '')return $input;
-    else{
-      return "<div class='form-group form-group-default'>
-                <label>{$label}</label>
-                {$input}
-              </div>";
-    }
+    else return "<div class='form-group form-group-default'><label>{$label}</label>{$input}</div>";
   }
 
   //FUNCTION TO GET TEXTAREA
@@ -108,6 +116,26 @@ class Html extends Sql{
   //FUNCTION TO GET PARAGRAPH
   public function p($html, $attr = []){
     return $this->tag('p', $html, $attr);
+  }
+
+  //FUNCTION TO GET UL LIST
+  public function ul($html, $attr = []){
+    return $this->tag('ul', $html, $attr);
+  }
+
+  //FUNCTION TO LI SPAN
+  public function li($html, $attr = []){
+    return $this->tag('li', $html, $attr);
+  }
+
+  //FUNCTION TO GET SPAN
+  public function span($html, $attr = []){
+    return $this->tag('span', $html, $attr);
+  }
+
+  //FUNCTION TO GET A TAG
+  public function a($html, $attr = []){
+    return $this->tag('a', $html, $attr);
   }
 
   //FUNCTION TO GET FORM

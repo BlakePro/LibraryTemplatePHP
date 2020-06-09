@@ -1,6 +1,4 @@
-<?php
-//INCLUDE CONFIG FILE
-include 'config.php';
+<?php include 'config.php';
 
 //CONTENT BODY
 $content = 'Hello World';

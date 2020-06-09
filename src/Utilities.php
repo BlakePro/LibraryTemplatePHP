@@ -1,5 +1,4 @@
-<?php
-namespace blakepro\Template;
+<?php namespace blakepro\Template;
 
 class Utilities{
 
@@ -25,12 +24,6 @@ class Utilities{
     }else return $currency.number_format($number, $decimal);
   }
 
-  public function in_string($search, $string){
-    $bool = @strpos($string, $search);
-    if($bool === FALSE)return FALSE;
-    else return TRUE;
-  }
-
   public function just_number($string){
     return preg_replace('~\D~', '', $string);
   }
@@ -40,8 +33,19 @@ class Utilities{
   }
 
   public function remove_string($string, $int = 1, $start = 0){
-    if(is_string($string) && $string != '')return trim(substr($string, $start, strlen($string)-$int));
+    if(is_string($string) && $string != '' && is_numeric($int) && is_numeric($start))return trim(substr($string, $start, strlen($string)-$int));
     else return $string;
+  }
+
+  //FUNCTION TO CREATE CLEAN URL
+  public function slug($string, $separator = '-',  $special_cases = ['&' => 'and', "'" => '']){
+    $accents_regex = '~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i';
+    $string = mb_strtolower(trim( $string ), 'UTF-8');
+    $string = str_replace(array_keys($special_cases), array_values($special_cases), $string);
+    $string = preg_replace($accents_regex, '$1', htmlentities($string, ENT_QUOTES, 'UTF-8'));
+    $string = preg_replace("/[^a-z0-9]/u", $separator, $string);
+    $string = preg_replace("/[{$separator}]+/u", $separator, $string);
+    return $string;
   }
 
   //REMOVE SPECIAL CHARACTER STRING
@@ -94,15 +98,21 @@ class Utilities{
     return array_sum($data);
   }
 
+  public function in_string($search, $string){
+    $bool = @strpos($string, $search);
+    if($bool === FALSE)return FALSE;
+    else return TRUE;
+  }
+
   public function is_file($file){
     return $this->file_check($file);
   }
 
-  function is_email($email) {
+  public function is_email($email) {
     return filter_var($email, FILTER_VALIDATE_EMAIL) ? TRUE : FALSE;
   }
 
-  function is_content($array){
+  public function is_content($array){
     if(is_array($array) && !empty($array))return TRUE;
     else return FALSE;
   }
@@ -113,11 +123,11 @@ class Utilities{
   }
 
   //FUNCTION TO GET USER AGENT IP
-  function get_user_agent(){
+  public function get_user_agent(){
     return $this->key('HTTP_USER_AGENT', $_SERVER);
   }
 
-  function get_user_language(){
+  public function get_user_language(){
      return $this->key('HTTP_ACCEPT_LANGUAGE', $_SERVER);
   }
 
@@ -205,10 +215,8 @@ class Utilities{
     	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
       //PORT
-      if(is_numeric($port)){
-        curl_setopt($ch, CURLOPT_PORT, $port);
-      }
-
+      if(is_numeric($port))curl_setopt($ch, CURLOPT_PORT, $port);
+      
       //DATA
       if($this->is_content($data)){
     		$build_query = http_build_query($data, '', '&');
@@ -237,7 +245,7 @@ class Utilities{
       $response = curl_exec($ch);
       if(curl_errno($ch)){
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $response = "CURL ({$code}):".curl_error($ch);
+        $response = "Error fetch ({$code}): ".curl_error($ch);
       }
       curl_close($ch);
     }

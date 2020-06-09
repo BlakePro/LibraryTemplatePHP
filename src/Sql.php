@@ -1,6 +1,4 @@
-<?php
-namespace blakepro\Template;
-use PDO;
+<?php namespace blakepro\Template; use PDO;
 
 class Sql extends Utilities{
 
