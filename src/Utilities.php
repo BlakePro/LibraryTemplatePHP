@@ -7,11 +7,11 @@ class Utilities{
   }
 
   public function encrypt($string){
-    return openssl_encrypt($string, "AES-128-ECB", $this->encryption_key);
+    return openssl_encrypt($string, 'AES-128-ECB', $this->encryption_key);
   }
 
   public function decrypt($string){
-    return openssl_decrypt($string, "AES-128-ECB", $this->encryption_key);
+    return openssl_decrypt($string, 'AES-128-ECB', $this->encryption_key);
   }
 
   //FUNCTION TO ADD CURRENCY
@@ -25,11 +25,11 @@ class Utilities{
   }
 
   public function just_number($string){
-    return preg_replace('~\D~', '', $string);
+    if(is_string($string) && $string != '')return preg_replace('~\D~', '', $string);
   }
 
   public function just_letter($string){
-    return preg_replace('/[^a-zA-Z]/', '', $string);
+    if(is_string($string) && $string != '')return preg_replace('/[^a-zA-Z]/', '', $string);
   }
 
   public function remove_string($string, $int = 1, $start = 0){
@@ -39,13 +39,15 @@ class Utilities{
 
   //FUNCTION TO CREATE CLEAN URL
   public function slug($string, $separator = '-',  $special_cases = ['&' => 'and', "'" => '']){
-    $accents_regex = '~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i';
-    $string = mb_strtolower(trim( $string ), 'UTF-8');
-    $string = str_replace(array_keys($special_cases), array_values($special_cases), $string);
-    $string = preg_replace($accents_regex, '$1', htmlentities($string, ENT_QUOTES, 'UTF-8'));
-    $string = preg_replace("/[^a-z0-9]/u", $separator, $string);
-    $string = preg_replace("/[{$separator}]+/u", $separator, $string);
-    return $string;
+    if(is_string($string) && $string != ''){
+      $accents_regex = '~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i';
+      $string = mb_strtolower(trim($string), 'UTF-8');
+      $string = str_replace(array_keys($special_cases), array_values($special_cases), $string);
+      $string = preg_replace($accents_regex, '$1', htmlentities($string, ENT_QUOTES, 'UTF-8'));
+      $string = preg_replace("/[^a-z0-9]/u", $separator, $string);
+      $string = preg_replace("/[{$separator}]+/u", $separator, $string);
+      return $string;
+    }
   }
 
   //REMOVE SPECIAL CHARACTER STRING
@@ -70,8 +72,13 @@ class Utilities{
      return $string;
   }
 
+  public function ttrim($value){
+    if(is_string($value))return trim($value);
+    return $value;
+  }
+
   public function key($key, $array, $default = ''){
-    return is_array($array) ? array_key_exists($key, $array) ? $array[$key] : $default : null;
+    return is_array($array) ? array_key_exists($key, $array) ? $this->ttrim($array[$key]) : $this->ttrim($default) : null;
   }
 
   public function post($key, $decrypt = FALSE){
@@ -112,6 +119,10 @@ class Utilities{
     return filter_var($email, FILTER_VALIDATE_EMAIL) ? TRUE : FALSE;
   }
 
+  public function is_url($email) {
+    return filter_var($email, FILTER_VALIDATE_URL) ? TRUE : FALSE;
+  }
+
   public function is_content($array){
     if(is_array($array) && !empty($array))return TRUE;
     else return FALSE;
@@ -145,7 +156,7 @@ class Utilities{
 
   public function parse($array, $key_select, $val_select, $name_table, $option_select = '', $return_option = TRUE, $empty_option = TRUE, $encrypt = FALSE){
     $return = [];
-    if(is_array($array) && !empty($array) && is_string($key_select)){
+    if($this->is_content($array) && is_string($key_select)){
       foreach($array as $norow => $arr){
         if(is_array($arr) && !empty($arr)){
 
@@ -156,7 +167,7 @@ class Utilities{
             if(array_key_exists($name_key, $arr)){
               $arr_named_key = $arr[$name_key];
 
-              if(is_array($val_select) && !empty($val_select)){
+              if($this->is_content($val_select)){
                 foreach($val_select as $k_val => $v_val){
                   if($name_table == '')$name_val = $v_val;
                   else $name_val = "{$name_table}__{$v_val}";
@@ -216,7 +227,7 @@ class Utilities{
 
       //PORT
       if(is_numeric($port))curl_setopt($ch, CURLOPT_PORT, $port);
-      
+
       //DATA
       if($this->is_content($data)){
     		$build_query = http_build_query($data, '', '&');
