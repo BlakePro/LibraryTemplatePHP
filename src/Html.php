@@ -339,6 +339,20 @@ class Html extends Sql{
     return $this->div($alert, ['class' => 'push-on-sidebar-open']);
   }
 
+  //FUNCTION TO CONVERT NUMBER TO EMOJI
+  public function number_emoji($number){
+    $emoji = '';
+    if(is_numeric($number)){
+      $array = str_split($number);
+      if($this->is_content($array)){
+        foreach($array as $k => $no){
+          if(is_numeric($no))$emoji .= json_decode('"' . "\u003{$no}\u20E3" . '"');
+        }
+      }
+    }
+    return $emoji;
+  }
+
   //FUNCTION TO PRINT OR SHOW ARRAY AS CLEANEST POSSIBLE
   public function pre($array){
     if(is_array($array))$html = print_r($array, TRUE);
@@ -354,20 +368,6 @@ class Html extends Sql{
   //SHORTCUT PRINT_PRE
   public function ppre($array){
     print $this->pre($array);
-  }
-
-  //FUNCTION TO CONVERT NUMBER TO EMOJI
-  public function emoji_number($number){
-    $emoji = '';
-    if(is_numeric($number)){
-      $array = str_split($number);
-      if($this->is_content($array)){
-        foreach($array as $k => $no){
-          if(is_numeric($no))$emoji .= json_decode('"' . "\u003{$no}\u20E3" . '"');
-        }
-      }
-    }
-    return $emoji;
   }
 
   //FUNCTION TO COMPRESS HTML
