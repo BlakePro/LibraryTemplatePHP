@@ -106,9 +106,20 @@ class Utilities{
   }
 
   public function in_string($search, $string){
-    $bool = @strpos($string, $search);
-    if($bool === FALSE)return FALSE;
-    else return TRUE;
+    if($this->is_content($string)){
+      $in_string = FALSE;
+      foreach($string as $n => $word){
+        if($this->in_string($word, $search)){
+          $in_string = TRUE;
+          break;
+        }
+      }
+      return $in_string;
+    }else{
+      $bool = @strpos($string, $search);
+      if($bool === FALSE)return FALSE;
+      else return TRUE;
+    }
   }
 
   public function is_file($file){
