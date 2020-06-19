@@ -351,9 +351,23 @@ class Html extends Sql{
     print $this->pre($array);
   }
 
-  //SHORTVUT PRINT_PRE
+  //SHORTCUT PRINT_PRE
   public function ppre($array){
     print $this->pre($array);
+  }
+
+  //FUNCTION TO CONVERT NUMBER TO EMOJI
+  public function emoji_number($number){
+    $emoji = '';
+    if(is_numeric($number)){
+      $array = str_split($number);
+      if($this->is_content($array)){
+        foreach($array as $k => $no){
+          if(is_numeric($no))$emoji .= json_decode('"' . "\u003{$no}\u20E3" . '"');
+        }
+      }
+    }
+    return $emoji;
   }
 
   //FUNCTION TO COMPRESS HTML
