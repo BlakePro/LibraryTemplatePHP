@@ -122,6 +122,7 @@ class Utilities{
     }
   }
 
+  //ALIAS FILE CHECK
   public function is_file($file){
     return $this->file_check($file);
   }
@@ -134,6 +135,7 @@ class Utilities{
     return filter_var($email, FILTER_VALIDATE_URL) ? TRUE : FALSE;
   }
 
+  //CHECK CONTENT ARRAY
   public function is_content($array){
     if(is_array($array) && !empty($array))return TRUE;
     else return FALSE;
@@ -234,6 +236,12 @@ class Utilities{
     return $return;
   }
 
+  //ALIAS CURL
+  public function fetch($args = []){
+    return $this->curl($args);
+  }
+
+  //CURL
   public function curl($args = []){
     $response = '';
     $url = $this->key('url', $args);
@@ -243,6 +251,7 @@ class Utilities{
       $credentials = $this->key('credentials', $args);
       $timeout = $this->key('timeout', $args, 60);
       $port = $this->key('port', $args);
+      $agent = $this->key('agent', $args);
 
     	$ch = curl_init($url);
     	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
@@ -264,6 +273,11 @@ class Utilities{
     		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-length:'.strlen($build_query)]);
       }
 
+      //AGENT
+      if($agent != ''){
+        curl_setopt($ch, CURLOPT_USERAGENT, $agent);
+      }
+
      	//TIMEOUT
     	if(is_numeric($timeout)){
     	  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
@@ -281,8 +295,9 @@ class Utilities{
       $response = curl_exec($ch);
       if(curl_errno($ch)){
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $response = "Error fetch ({$code}): ".curl_error($ch);
+        $response = "Error ({$code}): ".curl_error($ch);
       }
+
       curl_close($ch);
     }
     return $response;
