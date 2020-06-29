@@ -165,7 +165,7 @@ class Utilities{
     }
   }
 
-  public function parse($array, $key_select, $val_select, $name_table, $option_select = '', $return_option = TRUE, $empty_option = TRUE, $encrypt = FALSE){
+  public function parse($array, $key_select, $val_select, $name_table, $option_select = '', $return_option = TRUE, $empty_option = TRUE, $encrypt = FALSE, $clean = FALSE){
     $return = [];
     if($this->is_content($array) && is_string($key_select)){
       foreach($array as $norow => $arr){
@@ -217,7 +217,21 @@ class Utilities{
         }
       }
       return $option;
-    }else return $return;
+    }else{
+      if($clean){
+        $array = [];
+        if($this->is_content($return)){
+          foreach($return as $kid => $arr){
+            foreach($arr as $key => $val){
+              if($util->in_string($key, $tables))$key = str_replace('__', '', strstr($key, '__'));
+              $array[$kid][$key] = $val;
+            }
+          }
+        }
+        $return = $array;
+      }
+    }
+    return $return;
   }
 
   public function curl($args = []){
