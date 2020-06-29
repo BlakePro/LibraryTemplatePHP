@@ -225,8 +225,8 @@ class Utilities{
         if($this->is_content($return)){
           foreach($return as $kid => $arr){
             foreach($arr as $key => $val){
-              if($util->in_string($key, $clean))$key = str_replace('__', '', strstr($key, '__'));
-              $array[$kid][$key] = $val;
+              if($this->in_string($key, $clean))$key = str_replace('__', '', strstr($key, '__'));
+              if($key != '')$array[$kid][$key] = $val;
             }
           }
         }
