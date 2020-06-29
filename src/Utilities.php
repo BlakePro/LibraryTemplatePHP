@@ -167,7 +167,7 @@ class Utilities{
     }
   }
 
-  public function parse($array, $key_select, $val_select, $name_table, $option_select = '', $return_option = TRUE, $empty_option = TRUE, $encrypt = FALSE, $clean = FALSE){
+  public function parse($array, $key_select, $val_select, $name_table, $option_select = '', $return_option = TRUE, $empty_option = TRUE, $encrypt = FALSE, $clean = []){
     $return = [];
     if($this->is_content($array) && is_string($key_select)){
       foreach($array as $norow => $arr){
@@ -220,12 +220,12 @@ class Utilities{
       }
       return $option;
     }else{
-      if($clean){
+      if($this->is_content($clean)){
         $array = [];
         if($this->is_content($return)){
           foreach($return as $kid => $arr){
             foreach($arr as $key => $val){
-              $key = str_replace('__', '', strstr($key, '__'));
+              if($util->in_string($key, $clean))$key = str_replace('__', '', strstr($key, '__'));
               $array[$kid][$key] = $val;
             }
           }
