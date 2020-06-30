@@ -122,17 +122,28 @@ class Utilities{
     }
   }
 
+  //CHEK HEADERS 200
+  public function is_remote($url){
+    if($this->is_url($url))){
+      $headers = get_headers($url);
+      if($this->in_string('OK', $this->key(0, $headers)))return TRUE;
+    }
+    return FALSE;
+  }
+
   //ALIAS FILE CHECK
   public function is_file($file){
     return $this->file_check($file);
   }
 
+  //CHECK STRUCTURE EMAIL
   public function is_email($email) {
     return filter_var($email, FILTER_VALIDATE_EMAIL) ? TRUE : FALSE;
   }
 
-  public function is_url($email) {
-    return filter_var($email, FILTER_VALIDATE_URL) ? TRUE : FALSE;
+  //CHECK STRUCTURE URL
+  public function is_url($url) {
+    return filter_var($url, FILTER_VALIDATE_URL) ? TRUE : FALSE;
   }
 
   //CHECK CONTENT ARRAY
