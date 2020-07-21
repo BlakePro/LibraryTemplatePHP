@@ -318,15 +318,15 @@ class Html extends Sql{
 
   //FUNCTION TO MINIFY DATA IN TABLE FUNCTION
   public function table_min($args, $attr = []){
+    $table = [];
     $attr_table = $this->key('attr', $args);
     $th = $this->key('th', $args);
     $td = $this->key('td', $args);
     $class = $this->key('class', $args);
-    if($class == '')$class = 'table table-hover';
-    if(!$this->is_content($attr_table))$attr_table = ['class' => $class];
-    if(!$this->is_content($td))$td = [];
-    if(!$this->is_content($th))$th = [];
-    $table = ['attr' => $attr_table, 'th' => [$th], 'td' => $td];
+    if(!$this->is_content($attr_table))$attr_table['class'] = 'table table-hover';
+    $table['attr'] = $attr_table;
+    if(!$this->is_content($td))$table['td'] = $td;
+    if(!$this->is_content($th))$table['th'] = $th;
     return $this->table($table, $attr);
   }
 
