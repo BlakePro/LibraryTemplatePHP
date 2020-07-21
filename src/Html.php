@@ -317,17 +317,19 @@ class Html extends Sql{
   }
 
   //FUNCTION TO MINIFY DATA IN TABLE FUNCTION
-  public function table_min($args, $attr = []){
+  public function table_min($args, $div_attr = []){
     $table = [];
-    $attr_table = $this->key('attr', $args);
-    $th = $this->key('th', $args);
-    $td = $this->key('td', $args);
-    $class = $this->key('class', $args);
-    if(!$this->is_content($attr_table))$attr_table['class'] = 'table table-hover';
-    $table['attr'] = $attr_table;
-    if(!$this->is_content($td))$table['td'] = $td;
-    if(!$this->is_content($th))$table['th'] = $th;
-    return $this->table($table, $attr);
+    $attr = $this->key('attr', $args, []);
+    $th = $this->key('th', $args, []);
+    $td = $this->key('td', $args, []);
+    $class = $this->key('class', $args, 'table table-hover');
+    if(!$this->is_content($attr))$attr['class'] = $class;
+    $table['attr'] = $attr;
+    $table['td'] = $td;
+    $table['th'] = [$th];
+    if(!$this->is_content($td))unset($table['td']);
+    if(!$this->is_content($th))unset($table['th']);
+    return $this->table($table, $div_attr);
   }
 
   //FUNCTION TO GET HTML ALERT

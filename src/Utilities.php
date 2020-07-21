@@ -247,11 +247,6 @@ class Utilities{
     return $return;
   }
 
-  //ALIAS CURL
-  public function fetch($args = []){
-    return $this->curl($args);
-  }
-
   //CURL
   public function curl($args = []){
     $response = '';
