@@ -124,7 +124,7 @@ class Utilities{
 
   //CHEK HEADERS 200
   public function is_remote($url){
-    if($this->is_url($url))){
+    if($this->is_url($url)){
       $headers = get_headers($url);
       if($this->in_string('OK', $this->key(0, $headers)))return TRUE;
     }
