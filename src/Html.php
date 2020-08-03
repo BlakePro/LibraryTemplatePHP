@@ -213,7 +213,7 @@ class Html extends Sql{
     }else return $select;
   }
 
-  //SELECETED OPTION FROM ARRAY
+  //SELECTED OPTION FROM ARRAY
   public function selected($selected, $array){
     $options = [];
     if($this->is_content($array)){
@@ -222,6 +222,21 @@ class Html extends Sql{
         $value = $this->key('value', $arr);
         $options["{$key}"] = ['option' => "{$option}", 'value' => "{$value}"];
         if($value == $selected)$options["{$key}"]['selected'] = 'selected';
+      }
+    }
+    return $options;
+  }
+
+  //CREATE OPTION AND SELECTED FROM ARRAY (KEY & VAL)
+  function selected_array($selected, $array, $empty_option = TRUE){
+    $options = [];
+    if($empty_option)$options[] = ['value' => '', 'option' => ''];
+    if($this->is_content($array)){
+      foreach($array as $key => $value){
+        if(!is_array($value)){
+          $options["{$key}"] = ['value' => "{$key}", 'option' => "{$value}"];
+          if($value == $selected)$options["{$key}"]['selected'] = 'selected';
+        }
       }
     }
     return $options;
