@@ -235,7 +235,7 @@ class Html extends Sql{
       foreach($array as $key => $value){
         if(!is_array($value)){
           $options["{$key}"] = ['value' => "{$key}", 'option' => "{$value}"];
-          if($value == $selected)$options["{$key}"]['selected'] = 'selected';
+          if($key == $selected)$options["{$key}"]['selected'] = 'selected';
         }
       }
     }
