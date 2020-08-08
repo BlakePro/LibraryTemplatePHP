@@ -27,9 +27,29 @@ class Utilities{
   public function just_number($string){
     if(is_string($string) && $string != '')return preg_replace('~\D~', '', $string);
   }
+  //ALIAS JUST NUMBER
+  public function number($string){
+    return $this->just_number($string);
+  }
 
   public function just_letter($string){
     if(is_string($string) && $string != '')return preg_replace('/[^a-zA-Z]/', '', $string);
+  }
+  //ALIAS JUST LETTER
+  public function letter($string){
+    return $this->just_letter($string);
+  }
+
+  public function just_word($string, $special = TRUE){
+    if(is_string($string) && $string != ''){
+      if($special)$string = trim(preg_replace('/[^0-9a-zA-ZÁÉÍÓÚáéíóúÑñ@\/,.\s]/', '', utf8_encode($string)));
+      else $string = trim(preg_replace('/[^0-9a-zA-ZÁÉÍÓÚáéíóúÑñ@\s]/', '', utf8_encode($string)));
+      return $string;
+    }
+  }
+  //ALIAS JUST WORD
+  public function word($string, $special = TRUE){
+    return $this->just_word($string, $special);
   }
 
   public function remove_string($string, $int = 1, $start = 0){
