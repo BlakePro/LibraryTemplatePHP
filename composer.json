@@ -1,6 +1,6 @@
 {
     "name": "blakepro/template",
-    "description": "A simple class to create HTML PHP from JSON file",
+    "description": "A simple class to create HTML from JSON file",
     "type": "library",
     "license": "MIT",
     "authors": [

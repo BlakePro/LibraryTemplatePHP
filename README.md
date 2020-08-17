@@ -26,7 +26,7 @@ Not resolved packages use
 php composer.phar update blakepro/template --ignore-platform-reqs
 ```
 
-# Usage PHP
+# Usage PHP file
 ```
 <?php require __DIR__ . '/vendor/autoload.php';
 
@@ -37,7 +37,7 @@ $html = new blakepro\Template\Html();
 $pdo = new blakepro\Template\Sql(['host' => '', 'name' => '', 'user' => '', 'password' => '']);
 
 //UTILITIES
-$utilities = new blakepro\Template\Utilities(['encryption_key' => '']);
+$util = new blakepro\Template\Utilities(['encryption_key' => '']);
 
 ```
 #  Documentation / Wiki
