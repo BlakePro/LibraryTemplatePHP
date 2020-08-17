@@ -101,6 +101,27 @@ class Utilities{
     return is_array($array) ? array_key_exists($key, $array) ? $this->ttrim($array[$key]) : $this->ttrim($default) : null;
   }
 
+  function key_array($keys, $array){
+    if($this->is_content($keys) && $this->is_content($array)){
+      $total_keys = count($keys);
+      foreach($keys as $no => $key){
+        if(array_key_exists($key, $array)){
+          unset($keys[$no]);
+          $new = $array[$key];
+          if($total_keys == 1)return $new;
+          else return key_array($keys, $new);
+        }
+      }
+    }
+    return;
+  }
+
+  public function session($key, $decrypt = FALSE){
+    $data = $this->key($key, $_SESSION);
+    if($decrypt)$data = $this->decrypt($data);
+    return $data;
+  }
+
   public function post($key, $decrypt = FALSE){
     $data = $this->key($key, $_POST);
     if($decrypt)$data = $this->decrypt($data);
