@@ -42,7 +42,7 @@ class Utilities{
 
   public function just_word($string, $special = TRUE){
     if(is_string($string) && $string != ''){
-      if($special)$string = trim(preg_replace('/[^0-9a-zA-ZÁÉÍÓÚáéíóúÑñ@\/,.\s]/', '', utf8_encode($string)));
+      if($special)$string = trim(preg_replace('/[^0-9a-zA-ZÁÉÍÓÚáéíóúÑñ@\/,;.\s]/', '', utf8_encode($string)));
       else $string = trim(preg_replace('/[^0-9a-zA-ZÁÉÍÓÚáéíóúÑñ@\s]/', '', utf8_encode($string)));
       return $string;
     }
@@ -109,7 +109,7 @@ class Utilities{
           unset($keys[$no]);
           $new = $array[$key];
           if($total_keys == 1)return $new;
-          else return key_array($keys, $new);
+          else return $this->key_array($keys, $new);
         }
       }
     }

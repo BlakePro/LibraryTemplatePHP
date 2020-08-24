@@ -393,21 +393,47 @@ class Sql extends Utilities{
        	$params = [];
 
         /*-------- SET --------*/
+        $to_field = [];
         if($this->is_content($insert)){
           foreach($insert as $field_name => $value){
-            if(isset($arr_not_null[$name_table][$field_name]) && $value == ''){
-  						$str_empty .= "<li>{$arr_not_null[$name_table][$field_name]}</li>";
-  					}
-            if($value != ''){
-              $set_table .= "{$field_name} = ?, ";
-              $params[] = ($value); //utf8_encode
+
+            //MASIVE INSERT ADD 200820
+            if($this->is_content($value)){
+              //echo '<pre>', print_r($field_name, TRUE), '</pre>';
+              //echo '<pre>', print_r($value, TRUE), '</pre>';
+              $n_set_table = '';
+              foreach($value as $n_field_name => $n_value){
+                if(isset($arr_not_null[$name_table][$n_field_name]) && $n_value == ''){
+                  $str_empty .= "<li>{$arr_not_null[$name_table][$n_field_name]}</li>";
+                }else{
+                  $to_field[$n_field_name] = $n_field_name;
+                  if($n_value != ''){
+                    $n_set_table .= '?,';
+                    $params[] = $n_value;
+                  }
+                }
+              }
+              $n_set_table = $this->remove_string($n_set_table, 1);
+              $set_table .= "({$n_set_table}), ";
+            }else{
+              if(isset($arr_not_null[$name_table][$field_name]) && $value == ''){
+    						$str_empty .= "<li>{$arr_not_null[$name_table][$field_name]}</li>";
+    					}
+              if($value != ''){
+                $set_table .= "{$field_name} = ?, ";
+                $params[] = $value;
+              }
             }
           }
         }
         $set_table = $this->remove_string($set_table, 2);
         /*-------- SET --------*/
-
-        $sql = "INSERT INTO {$name_table} SET $set_table";
+        if($this->is_content($to_field)){
+          $to_field_str = implode(',', $to_field);
+          if($to_field_str != ''){
+            $sql = "INSERT INTO {$name_table} ({$to_field_str}) VALUES $set_table";
+          }else $params = [];
+        }else $sql = "INSERT INTO {$name_table} SET $set_table";
         $return[$name_table]['state'] = FALSE;
         $return[$name_table]['sql'] = $this->query_print($sql, $params);
 
