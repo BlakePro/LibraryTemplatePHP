@@ -58,7 +58,7 @@ class Utilities{
   }
 
   //FUNCTION TO CREATE CLEAN URL
-  public function slug($string, $separator = '-',  $special_cases = ['&' => 'and', "'" => '']){
+  public function slug($string, $separator = '-', $special_cases = ['&' => 'and', "'" => '', '?' => '', '¿' => '']){
     if(is_string($string) && $string != ''){
       $accents_regex = '~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i';
       $string = mb_strtolower(trim($string), 'UTF-8');
