@@ -204,6 +204,7 @@ class Sql extends Utilities{
       $at = $this->key('at', $data);
       $group = $this->key('group', $data);
       $order = $this->key('order', $data);
+      $rand = $this->key('rand', $data, FALSE);
 
       //ADD NEW WAY TO PASS LIMIT OFFSET
       if(is_numeric($limit) && $limit > 0)$limit = "LIMIT $limit";
@@ -270,18 +271,21 @@ class Sql extends Utilities{
   		}
 
       //ORDER
-      if($this->is_content($order)){
-				foreach($order as $key_table => $arrtable){
-					$str_order = '';
-					foreach($arrtable as $key_name => $order_type){
-  					if(in_array($key_table, $table) && $key_name != '' && $key_table != '' && $order_type != ''){
-  						$str_order .= "{$key_table}__{$key_name} {$order_type}, ";
+      if($rand)$order_by = "ORDER BY RAND()";
+      else{
+        if($this->is_content($order)){
+  				foreach($order as $key_table => $arrtable){
+  					$str_order = '';
+  					foreach($arrtable as $key_name => $order_type){
+    					if(in_array($key_table, $table) && $key_name != '' && $key_table != '' && $order_type != ''){
+    						$str_order .= "{$key_table}__{$key_name} {$order_type}, ";
+    					}
   					}
-					}
-				}
-  			$order_by = $this->remove_string($str_order, 2);
-  			if($order_by != '')$order_by = "ORDER BY $order_by";
-  		}
+  				}
+    			$order_by = $this->remove_string($str_order, 2);
+    			if($order_by != '')$order_by = "ORDER BY $order_by";
+    		}
+      }
 
       //ROWS
       foreach($table as $no_table => $name_table){
