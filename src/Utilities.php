@@ -27,7 +27,8 @@ class Utilities{
   public function just_number($string){
     if(is_string($string) && $string != '')return preg_replace('~\D~', '', $string);
   }
-  //ALIAS JUST NUMBER
+
+  //ALIAS FUNCTION JUST_NUMBER
   public function number($string){
     return $this->just_number($string);
   }
@@ -35,23 +36,24 @@ class Utilities{
   public function just_letter($string){
     if(is_string($string) && $string != '')return preg_replace('/[^a-zA-Z]/', '', $string);
   }
-  //ALIAS JUST LETTER
+
+  //ALIAS FUNCTION JUST_LETTER
   public function letter($string){
     return $this->just_letter($string);
   }
 
-  public function just_word($string, $special = TRUE, $allow_emoji = FALSE){
+  public function just_word($string, $special = TRUE, $remove_emoji = FALSE){
     if(is_string($string) && $string != ''){
       if($special)$string = trim(preg_replace('/[^0-9a-zA-ZÁÉÍÓÚáéíóúÑñ@\/,;.\s]/', '', utf8_encode($string)));
       else $string = trim(preg_replace('/[^0-9a-zA-ZÁÉÍÓÚáéíóúÑñ@\s]/', '', utf8_encode($string)));
-      if($allow_emoji)$string = $this->remove_emoji($string);
+      if($remove_emoji)$string = $this->remove_emoji($string);
       return $string;
     }
   }
 
-  //ALIAS JUST WORD
-  public function word($string, $special = TRUE){
-    return $this->just_word($string, $special);
+  //ALIAS FUNCTION JUST_WORD
+  public function word($string, $special = TRUE, $remove_emoji = FALSE){
+    return $this->just_word($string, $special, $remove_emoji);
   }
 
   public function remove_string($string, $int = 1, $start = 0){
@@ -60,8 +62,9 @@ class Utilities{
   }
 
   //FUNCTION TO CREATE CLEAN URL
-  public function slug($string, $separator = '-', $special_cases = ['&' => 'and', "'" => '', '?' => '', '¿' => '']){
+  public function slug($string, $separator = '-', $special_cases = ['&' => 'and', "'" => '', '?' => '', '¿' => ''], $strip_tags = TRUE){
     if(is_string($string) && $string != ''){
+      if($strip_tags)$string = strip_tags($string);
       $accents_regex = '~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i';
       $string = mb_strtolower(trim($string), 'UTF-8');
       $string = str_replace(array_keys($special_cases), array_values($special_cases), $string);
