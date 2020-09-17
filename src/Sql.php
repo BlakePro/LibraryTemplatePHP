@@ -203,6 +203,7 @@ class Sql extends Utilities{
       $on = $this->key('on', $data);
       $at = $this->key('at', $data);
       $group = $this->key('group', $data);
+      $group_on = $this->key('group_on', $data);
       $order = $this->key('order', $data);
       $rand = $this->key('rand', $data, FALSE);
 
@@ -250,25 +251,39 @@ class Sql extends Utilities{
         }
     	}
 
-  		//GROUP
+      //GROUP
   		if($this->is_content($group)){
-  			foreach($group as $no_on => $arr_on){
-  				foreach($arr_on as $key_name => $arrtable){
-  					$str_key = '';
-  					foreach($arrtable as $notable => $key_table){
-  						if(in_array($key_table, $table) && $key_name != '' && $key_table != ''){
-  							$str_key .= "{$key_table}.{$key_name} = ";
-  						}
+				foreach($group as $key_table => $arrtable){
+					$str_group = '';
+					foreach($arrtable as $key_name => $group_name){
+  					if(in_array($key_table, $table) && $key_table != '' && $group_name != ''){
+  						$str_group .= "{$key_table}__{$group_name}, ";
   					}
-  					if($str_key != ''){
-  						$str_key = $this->remove_string($str_key, 2);
-  						$group_by .= "{$str_key} AND ";
-  					}
-  				}
-  			}
-  			$group_by = $this->remove_string($group_by, 5);
+					}
+				}
+  			$group_by = $this->remove_string($str_group, 2);
   			if($group_by != '')$group_by = "GROUP BY $group_by";
-  		}
+      }else{
+    		//GROUP ON
+    		if($this->is_content($group_on)){
+    			foreach($group_on as $no_on => $arr_on){
+    				foreach($arr_on as $key_name => $arrtable){
+    					$str_key = '';
+    					foreach($arrtable as $notable => $key_table){
+    						if(in_array($key_table, $table) && $key_name != '' && $key_table != ''){
+    							$str_key .= "{$key_table}.{$key_name} = ";
+    						}
+    					}
+    					if($str_key != ''){
+    						$str_key = $this->remove_string($str_key, 2);
+    						$group_by .= "{$str_key} AND ";
+    					}
+    				}
+    			}
+    			$group_by = $this->remove_string($group_by, 5);
+    			if($group_by != '')$group_by = "GROUP BY $group_by";
+    		}
+      }
 
       //ORDER
       if($rand)$order_by = "ORDER BY RAND()";
