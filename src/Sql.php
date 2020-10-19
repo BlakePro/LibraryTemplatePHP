@@ -11,7 +11,7 @@ class Sql extends Utilities{
   }
 
   public function criteria(){
-    return ['=', ' !=', 'LIKE', 'LIKE %...%', 'NOT LIKE', 'REGEXP', 'NOT REGEXP', 'IN (...)', 'NOT IN (...)', 'IS NULL', 'IS NOT NULL' , 'BETWEEN', 'NOT BETWEEN'];
+    return ['=', ' !=', 'LIKE', 'LIKE %...%', 'NOT LIKE', 'REGEXP', 'NOT REGEXP', 'IN (...)', 'NOT IN (...)', 'IS NULL', 'IS NOT NULL' , 'BETWEEN', 'NOT BETWEEN', '>', '>=', '<', '<='];
   }
 
   public function query($args){
@@ -39,7 +39,7 @@ class Sql extends Utilities{
   }
 
   public function get_id_insert($array){
-    if(is_array($array) && !empty($array))
+    if($this->is_content($array))
     return $this->key('insert', $this->key('fetch', $this->key(key($array), $array)));
   }
 
@@ -159,7 +159,7 @@ class Sql extends Utilities{
             $arr_table_where = $this->get_table_where($array_criteria_where, $where_criteria, $name_table, $field_name);
             $where_table .= $this->key('where', $arr_table_where);
             $all_params = $this->key('params', $arr_table_where);
-            if(is_array($all_params) && !empty($all_params)){foreach($all_params as $kp => $vparam)$params[] = $vparam;}
+            if($this->is_content($all_params)){foreach($all_params as $kp => $vparam)$params[] = $vparam;}
             //WHERE UPDATE VERSION
           }
         }
@@ -331,11 +331,11 @@ class Sql extends Utilities{
             $arr_table_where = $this->get_table_where($array_criteria_where, $where_criteria, $name_table, $field_name);
             $where_table .= $this->key('where', $arr_table_where);
             $params = $this->key('params', $arr_table_where);
-            if(is_array($params) && !empty($params)){foreach($params as $kp => $vparam)$all_params[] = $vparam;}
+            if($this->is_content($params)){foreach($params as $kp => $vparam)$all_params[] = $vparam;}
             //WHERE UPDATE VERSION
           }
           if($where_table != '')$where_table = "WHERE 1 {$where_table}";
-          $sql = trim("SELECT * FROM {$db}{$name_table_col} {$where_table}");
+          $sql = ("SELECT * FROM {$db}{$name_table_col} {$where_table}");
           $sql_join .= "($sql) $name_table $val_join JOIN ";
         }
       }
@@ -347,6 +347,7 @@ class Sql extends Utilities{
       if(count($table) > 1)$sql_join = "SELECT $rows FROM ({$sql_join} {$keys}) $group_by $order_by $limit";
       else $sql_join = "SELECT $rows FROM {$sql_join} {$keys} $group_by $order_by $limit";
 
+      $sql_join = str_replace(['NULLAND', ')AND'], ['NULL AND', ') AND'], $sql_join);
       $return = $this->sql($sql_join, $all_params);
   		$return['desc'] = $arr_sql_desc;
   		return $return;
@@ -487,7 +488,7 @@ class Sql extends Utilities{
             $arr_table_where = $this->get_table_where($array_criteria_where, $where_criteria, $name_table, $field_name);
             $where_table .= $this->key('where', $arr_table_where);
             $all_params = $this->key('params', $arr_table_where);
-            if(is_array($all_params) && !empty($all_params)){foreach($all_params as $kp => $vparam)$params[] = $vparam;}
+            if($this->is_content($all_params)){foreach($all_params as $kp => $vparam)$params[] = $vparam;}
             //WHERE UPDATE VERSION
           }
         }
@@ -538,36 +539,41 @@ class Sql extends Utilities{
       $option_sel_criteria = $this->key('option', $array_criteria_data);
       if(is_numeric($option_sel_criteria)){
 
-        if($option_sel_criteria == 3){
-          $option_criteria = $this->key(2, $array_criteria_where);
-          if(is_string($value_criteria))$value_criteria = "%{$value_criteria}%";
+        if(!in_array($option_sel_criteria, [9, 10])){
+          if($option_sel_criteria == 3){
+            $option_criteria = $this->key(2, $array_criteria_where);
+            if(is_string($value_criteria))$value_criteria = "%{$value_criteria}%";
 
-        }elseif(in_array($option_sel_criteria, [9, 10])){
-          if($option_sel_criteria == 9)$where_table = "AND $field_name IS NULL";
-          else $where_table = "AND $field_name IS NOT NULL";
+          }elseif(in_array($option_sel_criteria, [7, 8])){
+            if($option_sel_criteria == 7)$option_criteria = 'IN';
+            else $option_criteria = 'NOT IN';
 
-        }elseif(in_array($option_sel_criteria, [7, 8])){
-          if($option_sel_criteria == 7)$option_criteria = 'IN';
-          else $option_criteria = 'NOT IN';
+          }else $option_criteria = $this->key($option_sel_criteria, $array_criteria_where);
+        }
 
-        }else $option_criteria = $this->key($option_sel_criteria, $array_criteria_where);
+        //NOT AND IS NULL OPTION
+        if(in_array($option_sel_criteria, [9, 10])){
+          if($option_sel_criteria == 9)$where_table = " AND {$field_name} IS NULL";
+          else $where_table = " AND {$field_name} IS NOT NULL ";
 
         //BETWEEN
-        if(in_array($option_sel_criteria, [11, 12])){
+        }elseif(in_array($option_sel_criteria, [11, 12])){
           $array_pdo = $this->where($value_criteria);
           foreach($array_pdo['array'] as $kpdo => $vpdo)$params[] = $vpdo;
 
-          if($option_sel_criteria == 11)$where_table = "AND $field_name BETWEEN ? AND ?";
-          else $where_table = "AND $field_name NOT BETWEEN ? AND ?";
+          if($option_sel_criteria == 11)$where_table = " AND {$field_name} BETWEEN ? AND ? ";
+          else $where_table = " AND {$field_name} NOT BETWEEN ? AND ? ";
 
         }elseif(is_array($value_criteria)){
           $array_pdo = $this->where($value_criteria);
-          $where_table .= " AND $field_name {$option_criteria} ({$array_pdo['where']})";
+          $where_table .= " AND $field_name {$option_criteria} ({$array_pdo['where']}) ";
           foreach($array_pdo['array'] as $kpdo => $vpdo)$params[] = $vpdo;
+
         }else{
-          $where_table .= " AND $field_name {$option_criteria} (?)";
+          $where_table .= " AND {$field_name} {$option_criteria} (?) ";
           $params[] = $value_criteria;
         }
+
       }
     }
     return ['where' => $where_table, 'params' => $params];

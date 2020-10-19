@@ -1,6 +1,5 @@
 <?php namespace blakepro\Template;
 
-//1.2
 class Html extends Sql{
 
   //CONSTRUCT
