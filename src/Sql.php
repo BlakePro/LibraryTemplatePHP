@@ -570,10 +570,11 @@ class Sql extends Utilities{
           foreach($array_pdo['array'] as $kpdo => $vpdo)$params[] = $vpdo;
 
         }else{
-          $where_table .= " AND {$field_name} {$option_criteria} (?) ";
-          $params[] = $value_criteria;
+          if($option_criteria != ''){
+            $where_table .= " AND {$field_name} {$option_criteria} (?) ";
+            $params[] = $value_criteria;
+          }
         }
-
       }
     }
     return ['where' => $where_table, 'params' => $params];
