@@ -198,6 +198,18 @@ class Utilities{
     else return FALSE;
   }
 
+  //CHECK STRING RFC
+  public function is_rfc($rfc){
+    $rfc = trim($rfc);
+    $len = strlen($rfc);
+    if($len >= 10 && $len <= 13){
+      if($len == 13)$regex = '/^[A-Za-zÑñ&]{4}([0-9]{2})(1[0-2]|0[1-9])([0-3][0-9])([A-Z0-9]{3})$/';
+      else $regex = '/^[A-Za-zÑñ&]{3}([0-9]{2})(1[0-2]|0[1-9])([0-3][0-9])([A-Z0-9]{3})$/';
+      return preg_match($regex, $rfc);
+    }else return FALSE;
+  }
+
+  //CHECK FILE
   public function file_check($file){
     if(FALSE !== stream_resolve_include_path($file))return TRUE;
     else return FALSE;
@@ -291,6 +303,11 @@ class Utilities{
       }
     }
     return $return;
+  }
+
+  //ALIAS CURL
+  public function ffetch($args = []){
+    return $this->curl($args);
   }
 
   //CURL
