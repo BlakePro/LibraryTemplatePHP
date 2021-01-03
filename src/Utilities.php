@@ -322,8 +322,8 @@ class Utilities{
       $max_redirs = $this->key('max_redirs', $args, 3);
       $port = $this->key('port', $args);
       $agent = $this->key('agent', $args);
-      $method = $this->key('method', $args, 'POST');
-      $follow = $this->key('follow', $args, TRUE);
+      $method = $this->key('method', $args, 'GET');
+      $follow = $this->key('follow', $args, FALSE);
       $header = $this->key('header', $args, []);
 
     	$ch = curl_init($url);
@@ -331,9 +331,6 @@ class Utilities{
     	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
    	  curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
     	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-
-      //METHOD
-      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
 
       //FOLLOW
       curl_setopt($ch, CURLOPT_FOLLOWLOCATION, $follow);
@@ -349,6 +346,9 @@ class Utilities{
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
     	  $header[] = 'Content-length:'.strlen($build_query);
       }
+
+      //METHOD
+      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
 
       //HEADER
       if($this->is_content($header)){
