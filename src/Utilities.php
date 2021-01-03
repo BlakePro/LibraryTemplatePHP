@@ -319,14 +319,24 @@ class Utilities{
       $data = $this->key('data', $args);
       $credentials = $this->key('credentials', $args);
       $timeout = $this->key('timeout', $args, 60);
+      $max_redirs = $this->key('max_redirs', $args, 3);
       $port = $this->key('port', $args);
       $agent = $this->key('agent', $args);
+      $method = $this->key('method', $args, 'POST');
+      $follow = $this->key('follow', $args, TRUE);
+      $header = $this->key('header', $args, []);
 
     	$ch = curl_init($url);
     	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
     	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
    	  curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
     	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+      //METHOD
+      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+
+      //FOLLOW
+      curl_setopt($ch, CURLOPT_FOLLOWLOCATION, $follow);
 
       //PORT
       if(is_numeric($port))curl_setopt($ch, CURLOPT_PORT, $port);
@@ -335,11 +345,14 @@ class Utilities{
       if($this->is_content($data)){
     		$build_query = http_build_query($data, '', '&');
     		curl_setopt($ch, CURLOPT_POST, TRUE);
-      	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-     		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
      		curl_setopt($ch, CURLOPT_POSTFIELDS, $build_query);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
-    		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-length:'.strlen($build_query)]);
+    	  $header[] = 'Content-length:'.strlen($build_query);
+      }
+
+      //HEADER
+      if($this->is_content($header)){
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
       }
 
       //AGENT
@@ -351,7 +364,13 @@ class Utilities{
     	if(is_numeric($timeout)){
     	  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
         curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+
     	}
+
+      //MAXREDIRS
+      if(is_numeric($max_redirs)){
+        curl_setopt($ch, CURLOPT_MAXREDIRS, $max_redirs);
+      }
 
       //BASIC AUTH
       if($this->is_content($credentials)){
