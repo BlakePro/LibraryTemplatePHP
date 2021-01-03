@@ -325,6 +325,7 @@ class Utilities{
       $method = $this->key('method', $args, 'GET');
       $follow = $this->key('follow', $args, FALSE);
       $header = $this->key('header', $args, []);
+      $post_fields = $this->key('post_fields', $args, []);
 
     	$ch = curl_init($url);
     	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
@@ -340,12 +341,14 @@ class Utilities{
 
       //DATA
       if($this->is_content($data)){
-    		$build_query = http_build_query($data, '', '&');
+    		$post_fields = http_build_query($data, '', '&');
     		curl_setopt($ch, CURLOPT_POST, TRUE);
-     		curl_setopt($ch, CURLOPT_POSTFIELDS, $build_query);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
     	  $header[] = 'Content-length:'.strlen($build_query);
       }
+
+      //POSTFIELDS
+      if($post_fields != '')curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
 
       //METHOD
       curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
