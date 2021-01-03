@@ -344,7 +344,7 @@ class Utilities{
     		$post_fields = http_build_query($data, '', '&');
     		curl_setopt($ch, CURLOPT_POST, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
-    	  $header[] = 'Content-length:'.strlen($build_query);
+    	  $header[] = 'Content-length:'.strlen($post_fields);
       }
 
       //POSTFIELDS
