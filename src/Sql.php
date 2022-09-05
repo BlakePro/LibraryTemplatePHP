@@ -306,9 +306,9 @@ class Sql extends Utilities{
       foreach($table as $no_table => $name_table){
         $name_table_col = $name_table;
         $name_table = $this->get_table_name($name_table, $db);
-        $where_table = '';
+        $where_table = $val_join = '';
       	$arr_rows = $this->key($name_table, $arr_sql_fields);
-      	$val_join = mb_strtoupper(trim($this->key($no_table, $options)));
+        if(is_string($this->key($no_table, $options)))$val_join = mb_strtoupper(trim($this->key($no_table, $options)));
       	if(!in_array($val_join, array('LEFT', 'RIGHT', 'INNER')))$val_join = '';
 
         //NEW WAY TO PASS ROWS AS SELECT ARGS
