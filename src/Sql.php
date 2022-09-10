@@ -143,8 +143,9 @@ class Sql extends Utilities{
             if(isset($arr_not_null[$name_table][$field_name]) && $value == ''){
               $str_empty .= "<li>{$arr_not_null[$name_table][$field_name]}</li>";
             }
-            //if($value === FALSE)$value = '0';
-            if(is_string($value)){
+            if($value == NULL){
+              $set_table .= " $field_name = NULL,";
+            }else if(is_string($value)){
               $set_table .= " $field_name = ?,";
               $params[] = "{$value}";
             }
@@ -400,10 +401,13 @@ class Sql extends Utilities{
   private function insert($data){
     $return = [];
     $arr_insert = $this->key('values', $data);
+    $on_duplicate = $this->key('duplicate', $data, FALSE);
     if($this->is_content($arr_insert)){
 
       $table = [];
-      foreach($arr_insert as $name_table => $insert)$table[] = $name_table;
+      foreach($arr_insert as $name_table => $insert){
+        $table[] = $name_table;
+      }
 
       $arr_sql_desc = $this->description($table);
       $arr_not_null = $this->key('not_null', $arr_sql_desc);
@@ -427,21 +431,26 @@ class Sql extends Utilities{
                   $str_empty .= "<li>{$arr_not_null[$name_table][$n_field_name]}</li>";
                 }else{
                   $to_field[$n_field_name] = $n_field_name;
-                  if($n_value != ''){
+                  //if($n_value != '' || $n_value == NULL){
                     $n_set_table .= '?,';
                     $params[] = $n_value;
-                  }
+                  //}
                 }
               }
               $n_set_table = $this->remove_string($n_set_table, 1);
               $set_table .= "({$n_set_table}), ";
             }else{
-              if(isset($arr_not_null[$name_table][$field_name]) && $value == ''){
-    						$str_empty .= "<li>{$arr_not_null[$name_table][$field_name]}</li>";
-    					}
-              if($value != ''){
-                $set_table .= "{$field_name} = ?, ";
-                $params[] = $value;
+              if($value == NULL){
+                $set_table .= " $field_name = NULL,";
+                //$params[] = NULL;
+              }else{
+                if(isset($arr_not_null[$name_table][$field_name]) && $value == ''){
+                  $str_empty .= "<li>{$arr_not_null[$name_table][$field_name]}</li>";
+                }
+                if($value != ''){
+                  $set_table .= "{$field_name} = ?, ";
+                  $params[] = $value;
+                }
               }
             }
           }
@@ -451,7 +460,15 @@ class Sql extends Utilities{
         if($this->is_content($to_field)){
           $to_field_str = implode(',', $to_field);
           if($to_field_str != ''){
-            $sql = "INSERT INTO {$name_table} ({$to_field_str}) VALUES $set_table";
+            if($on_duplicate){
+              $table_duplicate = '';
+              foreach($to_field as $k => $name_row){
+                $table_duplicate .= "{$name_row} = _VALUES.{$name_row},";
+              }
+              $table_duplicate = $this->remove_string($table_duplicate, 1);
+              $sql = "INSERT INTO {$name_table} ({$to_field_str}) VALUES $set_table AS _VALUES ON DUPLICATE KEY UPDATE {$table_duplicate}";
+            
+            }else $sql = "INSERT INTO {$name_table} ({$to_field_str}) VALUES $set_table";
           }else $params = [];
         }else $sql = "INSERT INTO {$name_table} SET $set_table";
         $return[$name_table]['state'] = FALSE;
